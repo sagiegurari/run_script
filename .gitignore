@@ -1,0 +1,10 @@
+.idea
+.c9
+target/
+temp/
+**/*.rs.bk
+Cargo.lock
+**/*.log
+dump.rdb
+/rs*.sh
+/docs/_site

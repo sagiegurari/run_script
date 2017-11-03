@@ -1,0 +1,44 @@
+[package]
+name = "run_script"
+version = "0.1.1"
+authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
+description = "Run shell scripts in rust."
+license = "Apache-2.0"
+documentation = "https://sagiegurari.github.io/run_script/api/run_script/index.html"
+homepage = "http://github.com/sagiegurari/run_script"
+repository = "https://github.com/sagiegurari/run_script.git"
+readme = "README.md"
+keywords = ["shell", "scripts", "os", "command", "runner"]
+categories = ["command-line-interface", "command-line-utilities"]
+include = [
+    "/benches/*",
+    "/docs/*",
+    "/examples/*",
+    "/src/*",
+    "/tests/*",
+    "/Cargo.toml",
+    "/LICENSE",
+    "/README.md",
+    "/Makefile.toml"
+]
+
+[dependencies]
+rand = "^0.3.17"
+
+[features]
+default = []
+
+[badges.travis-ci]
+branch = "master"
+repository = "sagiegurari/run_script"
+
+[badges.appveyor]
+repository = "sagiegurari/run_script"
+service = "github"
+branch = "master"
+project_name = "sagiegurari/run-script"
+
+[badges.codecov]
+branch = "master"
+repository = "sagiegurari/run_script"
+service = "github"
