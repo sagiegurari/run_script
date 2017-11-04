@@ -73,7 +73,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2017-11-04  | v0.1.2  | Initial release. |
+| 2017-11-04  | v0.1.3  | Initial release. |
 
 <a name="license"></a>
 ## License
