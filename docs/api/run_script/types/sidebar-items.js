@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["ErrorInfo","Holds the error information"]],"struct":[["ScriptError","Error struct"],["ScriptOptions","Options available for invoking the script"]]});
