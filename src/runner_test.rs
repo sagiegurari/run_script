@@ -139,3 +139,23 @@ fn run_test_error_execute() {
     let result = run("exit 1", &args, &options);
     assert!(result.is_err());
 }
+
+#[test]
+fn run_test_with_args() {
+    let args = vec!["ARG1".to_string()];
+    let options = ScriptOptions::new();
+
+    let script = if cfg!(windows) {
+        "echo arg: %1"
+    } else {
+        "echo arg: $1"
+    };
+
+    let (code, output, error) = run(script, &args, &options).unwrap();
+
+    assert_eq!(code, 0);
+    assert!(output.len() > 0);
+    assert_eq!(error.len(), 0);
+
+    assert!(output.find("arg: ARG1").is_some());
+}
