@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `run_script` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, run_script">
+
+    <title>run_script - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate run_script</p><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'run_script', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>run_script</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/run_script/lib.rs.html#1-177' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'>
+<h1 id='run_script' class='section-header'><a href='#run_script'>run_script</a></h1>
+<p>Run shell scripts in <a href="https://www.rust-lang.org/">rust</a>.</p>
+
+<p>This library enables to invoke shell scripts based on their content.<br>
+While std::process::Command works great to execute standalone command, you need more manual code to take a script
+text and execute it.<br>
+For this purpose, this library was created.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">run_script</span>;
+
+<span class="kw">use</span> <span class="ident">run_script</span>::<span class="ident">ScriptOptions</span>;
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="kw">let</span> <span class="ident">options</span> <span class="op">=</span> <span class="ident">ScriptOptions</span>::<span class="ident">new</span>();
+
+    <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
+
+    <span class="kw">let</span> (<span class="ident">code</span>, <span class="ident">output</span>, <span class="ident">error</span>) <span class="op">=</span> <span class="ident">run_script</span>::<span class="ident">run</span>(
+        <span class="string">r#&quot;
+        echo &quot;Directory Info:&quot;
+        dir
+        &quot;#</span>,
+        <span class="kw-2">&amp;</span><span class="ident">args</span>,
+        <span class="kw-2">&amp;</span><span class="ident">options</span>
+    ).<span class="ident">unwrap</span>();
+
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Exit Code: {}&quot;</span>, <span class="ident">code</span>);
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Output: {}&quot;</span>, <span class="ident">output</span>);
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Error: {}&quot;</span>, <span class="ident">error</span>);
+}</pre>
+
+<h1 id='installation' class='section-header'><a href='#installation'>Installation</a></h1>
+<p>In order to use this library, just add it as a dependency:</p>
+
+<pre><code class="language-ini">[dependencies]
+run_script = &quot;*&quot;
+</code></pre>
+
+<h1 id='contributing' class='section-header'><a href='#contributing'>Contributing</a></h1>
+<p>See <a href="https://github.com/sagiegurari/run_script/blob/master/.github/CONTRIBUTING.md">contributing guide</a></p>
+
+<h1 id='license' class='section-header'><a href='#license'>License</a></h1>
+<p>Developed by Sagie Gur-Ari and licensed under the
+<a href="https://github.com/sagiegurari/run_script/blob/master/LICENSE">Apache 2</a> open source license.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="types/index.html"
+                                  title='mod run_script::types'>types</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.run.html"
+                                  title='fn run_script::run'>run</a></td>
+                           <td class='docblock-short'>
+                                <p>Invokes the provided script content and returns the invocation output.</p>
+                           </td>
+                       </tr></table><h2 id='types-1' class='section-header'><a href="#types-1">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="type" href="type.ScriptOptions.html"
+                                  title='type run_script::ScriptOptions'>ScriptOptions</a></td>
+                           <td class='docblock-short'>
+                                <p>Options available for invoking the script</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "run_script";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
