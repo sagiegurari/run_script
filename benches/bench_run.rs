@@ -12,7 +12,7 @@ fn run(bencher: &mut Bencher) {
     let args = vec![];
 
     bencher.iter(|| {
-        let (code, output, error) = run(
+        let (code, output, error) = run_script::run(
             r#"
             echo "Test"
             exit 0
