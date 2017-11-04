@@ -33,8 +33,8 @@ fn main() {
     let mut options = ScriptOptions::new();
     options.runner = None; // The script runner, for example bash. By default for windows it's cmd.exe and for other systems it is sh.
     options.capture_output = true; // True to capture and return the output. False will print it to the parent process output.
-    options.exit_on_error = false; // Added set -e option (not available for windows)
-    options.print_commands = false; // Added set -x option (not available for windows)
+    options.exit_on_error = false; // Adds set -e option (not available for windows)
+    options.print_commands = false; // Adds set -x option (not available for windows)
 
     let args = vec![];
 
@@ -73,7 +73,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2017-11-04  | v0.1.3  | Initial release. |
+| 2017-11-04  | v0.1.4  | Initial release. |
 
 <a name="license"></a>
 ## License
