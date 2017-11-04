@@ -220,6 +220,7 @@
 <span id="175">175</span>
 <span id="176">176</span>
 <span id="177">177</span>
+<span id="178">178</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">anonymous_parameters</span>,
         <span class="ident">const_err</span>,
@@ -353,7 +354,8 @@
 <span class="kw">mod</span> <span class="ident">runner</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
 
-<span class="kw">use</span> <span class="ident">types</span>::<span class="ident">ScriptError</span>;
+<span class="doccomment">/// Error struct</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ScriptError</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">ScriptError</span>;
 
 <span class="doccomment">/// Options available for invoking the script</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ScriptOptions</span> <span class="op">=</span> <span class="ident">types</span>::<span class="ident">ScriptOptions</span>;

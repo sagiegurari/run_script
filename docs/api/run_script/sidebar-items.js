@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["run","Invokes the provided script content and returns the invocation output."]],"mod":[["types","types"]],"type":[["ScriptOptions","Options available for invoking the script"]]});
+initSidebarItems({"fn":[["run","Invokes the provided script content and returns the invocation output."]],"mod":[["types","types"]],"type":[["ScriptError","Error struct"],["ScriptOptions","Options available for invoking the script"]]});
