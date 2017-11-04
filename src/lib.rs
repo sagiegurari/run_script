@@ -130,7 +130,8 @@ extern crate rand;
 mod runner;
 pub mod types;
 
-use types::ScriptError;
+/// Error struct
+pub type ScriptError = types::ScriptError;
 
 /// Options available for invoking the script
 pub type ScriptOptions = types::ScriptOptions;
