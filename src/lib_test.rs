@@ -7,8 +7,8 @@ fn run_test() {
 
     let (code, output, error) = run(
         r#"
-        echo "Directory Info:"
-        dir
+        echo "Test"
+        exit 0
         "#,
         &args,
         &options

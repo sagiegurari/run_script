@@ -12,10 +12,10 @@ fn run(bencher: &mut Bencher) {
     let args = vec![];
 
     bencher.iter(|| {
-        let (code, output, error) = run_script::run(
+        let (code, output, error) = run(
             r#"
-            echo "Directory Info:"
-            dir
+            echo "Test"
+            exit 0
             "#,
             &args,
             &options

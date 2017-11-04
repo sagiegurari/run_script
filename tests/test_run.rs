@@ -3,15 +3,16 @@ extern crate run_script;
 use run_script::ScriptOptions;
 
 #[test]
-fn run() {
+fn run_test() {
+    let args = vec![];
     let options = ScriptOptions::new();
 
     let (code, output, error) = run_script::run(
         r#"
-        echo "Directory Info:"
-        dir
+        echo "Test"
+        exit 0
         "#,
-        &vec![],
+        &args,
         &options
     ).unwrap();
 
