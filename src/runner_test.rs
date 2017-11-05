@@ -123,11 +123,9 @@ fn run_test_error_exit_code() {
     let args = vec![];
     let options = ScriptOptions::new();
 
-    let (code, output, error) = run("exit 1", &args, &options).unwrap();
+    let result = run("exit 1", &args, &options).unwrap();
 
-    assert_eq!(code, 1);
-    assert_eq!(output.len(), 0);
-    assert_eq!(error.len(), 0);
+    assert_eq!(result.0, 1);
 }
 
 #[test]
