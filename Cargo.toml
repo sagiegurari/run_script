@@ -1,6 +1,6 @@
 [package]
 name = "run_script"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Run shell scripts in rust."
 license = "Apache-2.0"
@@ -23,7 +23,7 @@ include = [
 ]
 
 [dependencies]
-rand = "^0.3.17"
+rand = "^0.3.18"
 
 [features]
 default = []
