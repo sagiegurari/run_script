@@ -171,7 +171,7 @@ fn modify_script(
 ///     println!("Error: {}", error);
 /// }
 /// ````
-pub fn run(
+pub(crate) fn run(
     script: &str,
     args: &Vec<String>,
     options: &ScriptOptions,
