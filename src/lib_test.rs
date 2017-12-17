@@ -11,7 +11,7 @@ fn run_test() {
         exit 0
         "#,
         &args,
-        &options
+        &options,
     ).unwrap();
 
     assert_eq!(code, 0);

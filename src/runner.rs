@@ -7,10 +7,10 @@
 #[path = "./runner_test.rs"]
 mod runner_test;
 
-use rand::{Rng, thread_rng};
+use rand::{thread_rng, Rng};
 use std::env;
 use std::env::current_dir;
-use std::fs::{File, create_dir_all, remove_file};
+use std::fs::{create_dir_all, remove_file, File};
 use std::io;
 use std::io::Error;
 use std::io::prelude::*;
@@ -73,16 +73,14 @@ fn create_script_file(script: &String) -> Result<String, Error> {
             let file_path_str = &file_path.to_str().unwrap_or("");
 
             match File::create(&file_path) {
-                Ok(mut file) => {
-                    match file.write_all(script.as_bytes()) {
-                        Ok(_) => Ok(file_path_str.to_string()),
-                        Err(error) => {
-                            delete_file(&file_path_str);
+                Ok(mut file) => match file.write_all(script.as_bytes()) {
+                    Ok(_) => Ok(file_path_str.to_string()),
+                    Err(error) => {
+                        delete_file(&file_path_str);
 
-                            Err(error)
-                        }
+                        Err(error)
                     }
-                }
+                },
                 Err(error) => Err(error),
             }
         }
@@ -90,10 +88,7 @@ fn create_script_file(script: &String) -> Result<String, Error> {
     }
 }
 
-fn modify_script(
-    script: &String,
-    options: &ScriptOptions,
-) -> Result<String, ScriptError> {
+fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, ScriptError> {
     match current_dir() {
         Ok(cwd_holder) => {
             match cwd_holder.to_str() {
@@ -102,14 +97,19 @@ fn modify_script(
                     let mut cd_command = "cd ".to_string();
                     cd_command.push_str(cwd);
 
-                    let mut script_lines: Vec<String> = script.trim().split("\n").map(|string| string.to_string()).collect();
+                    let mut script_lines: Vec<String> = script
+                        .trim()
+                        .split("\n")
+                        .map(|string| string.to_string())
+                        .collect();
 
                     // check if first line is shebang line
-                    let mut insert_index = if script_lines.len() > 0 && script_lines[0].starts_with("#!") {
-                        1
-                    } else {
-                        0
-                    };
+                    let mut insert_index =
+                        if script_lines.len() > 0 && script_lines[0].starts_with("#!") {
+                            1
+                        } else {
+                            0
+                        };
 
                     if !cfg!(windows) {
                         if options.exit_on_error {
@@ -131,10 +131,16 @@ fn modify_script(
 
                     Ok(updated_script)
                 }
-                None => Err(ScriptError { info: ErrorInfo::Description("Unable to extract current working directory path.") }),
+                None => Err(ScriptError {
+                    info: ErrorInfo::Description(
+                        "Unable to extract current working directory path.",
+                    ),
+                }),
             }
         }
-        Err(error) => Err(ScriptError { info: ErrorInfo::IOError(error) }),
+        Err(error) => Err(ScriptError {
+            info: ErrorInfo::IOError(error),
+        }),
     }
 }
 
@@ -177,46 +183,48 @@ pub(crate) fn run(
     options: &ScriptOptions,
 ) -> Result<(i32, String, String), ScriptError> {
     match modify_script(&script.to_string(), &options) {
-        Ok(updated_script) => {
-            match create_script_file(&updated_script) {
-                Ok(file) => {
-                    let command = match options.runner {
-                        Some(ref value) => value,
-                        None => {
-                            if cfg!(windows) {
-                                "cmd.exe"
-                            } else {
-                                "sh"
-                            }
+        Ok(updated_script) => match create_script_file(&updated_script) {
+            Ok(file) => {
+                let command = match options.runner {
+                    Some(ref value) => value,
+                    None => {
+                        if cfg!(windows) {
+                            "cmd.exe"
+                        } else {
+                            "sh"
                         }
-                    };
-
-                    let mut all_args = if cfg!(windows) {
-                        vec!["/C".to_string(), file.to_string()]
-                    } else {
-                        vec![file.to_string()]
-                    };
-
-                    all_args.extend(args.iter().cloned());
-
-                    let result = run_command(&command, &all_args, &options);
-
-                    delete_file(&file);
-
-                    match result {
-                        Ok(output) => {
-                            let exit_code = get_exit_code(output.status);
-                            let stdout = String::from_utf8_lossy(&output.stdout).into_owned();
-                            let stderr = String::from_utf8_lossy(&output.stderr).into_owned();
-
-                            Ok((exit_code, stdout, stderr))
-                        }
-                        Err(error) => Err(ScriptError { info: ErrorInfo::IOError(error) }),
                     }
+                };
+
+                let mut all_args = if cfg!(windows) {
+                    vec!["/C".to_string(), file.to_string()]
+                } else {
+                    vec![file.to_string()]
+                };
+
+                all_args.extend(args.iter().cloned());
+
+                let result = run_command(&command, &all_args, &options);
+
+                delete_file(&file);
+
+                match result {
+                    Ok(output) => {
+                        let exit_code = get_exit_code(output.status);
+                        let stdout = String::from_utf8_lossy(&output.stdout).into_owned();
+                        let stderr = String::from_utf8_lossy(&output.stderr).into_owned();
+
+                        Ok((exit_code, stdout, stderr))
+                    }
+                    Err(error) => Err(ScriptError {
+                        info: ErrorInfo::IOError(error),
+                    }),
                 }
-                Err(error) => Err(ScriptError { info: ErrorInfo::IOError(error) }),
             }
-        }
+            Err(error) => Err(ScriptError {
+                info: ErrorInfo::IOError(error),
+            }),
+        },
         Err(error) => Err(error),
     }
 }

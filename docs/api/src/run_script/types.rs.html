@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -123,6 +124,8 @@
 <span id="78">78</span>
 <span id="79">79</span>
 <span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! # types</span>
 <span class="doccomment">//!</span>
@@ -144,14 +147,14 @@
     <span class="doccomment">/// Root error</span>
     <span class="ident">IOError</span>(<span class="ident">Error</span>),
     <span class="doccomment">/// Description text of the error reason</span>
-    <span class="ident">Description</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>)
+    <span class="ident">Description</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>),
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// Error struct</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ScriptError</span> {
     <span class="doccomment">/// Holds the error information</span>
-    <span class="kw">pub</span> <span class="ident">info</span>: <span class="ident">ErrorInfo</span>
+    <span class="kw">pub</span> <span class="ident">info</span>: <span class="ident">ErrorInfo</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">ScriptError</span> {
@@ -174,10 +177,7 @@
 
 <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ScriptError</span> {
     <span class="doccomment">/// Formats the value using the given formatter.</span>
-    <span class="kw">fn</span> <span class="ident">fmt</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">info</span> {
             <span class="ident">ErrorInfo</span>::<span class="ident">IOError</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=&gt;</span> <span class="ident">cause</span>.<span class="ident">fmt</span>(<span class="ident">format</span>),
             <span class="ident">ErrorInfo</span>::<span class="ident">Description</span>(<span class="ident">description</span>) <span class="op">=&gt;</span> <span class="ident">description</span>.<span class="ident">fmt</span>(<span class="ident">format</span>),
@@ -190,18 +190,23 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ScriptOptions</span> {
     <span class="doccomment">/// Defines the requested runner (defaults to cmd in windows and sh for other platforms)</span>
     <span class="kw">pub</span> <span class="ident">runner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Defines if to print the output to the parent process, or capture and return the output (default)</span>
+    <span class="doccomment">/// False to print the output to the parent process, or capture and return the output (default)</span>
     <span class="kw">pub</span> <span class="ident">capture_output</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Sets the -e flag in the script to exit on any command error found inside the script (not available for windows)</span>
+    <span class="doccomment">/// Sets -e flag. Will exit on any error while running the script (not available for windows)</span>
     <span class="kw">pub</span> <span class="ident">exit_on_error</span>: <span class="ident">bool</span>,
-    <span class="doccomment">/// Sets the -x flag in the script to print each script command before invocation (not available for windows)</span>
-    <span class="kw">pub</span> <span class="ident">print_commands</span>: <span class="ident">bool</span>
+    <span class="doccomment">/// Sets -x flag for printing each script command before invocation (not available for windows)</span>
+    <span class="kw">pub</span> <span class="ident">print_commands</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">ScriptOptions</span> {
     <span class="doccomment">/// Returns new instance</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">ScriptOptions</span> {
-        <span class="ident">ScriptOptions</span> { <span class="ident">runner</span>: <span class="prelude-val">None</span>, <span class="ident">capture_output</span>: <span class="bool-val">true</span>, <span class="ident">exit_on_error</span>: <span class="bool-val">false</span>, <span class="ident">print_commands</span>: <span class="bool-val">false</span> }
+        <span class="ident">ScriptOptions</span> {
+            <span class="ident">runner</span>: <span class="prelude-val">None</span>,
+            <span class="ident">capture_output</span>: <span class="bool-val">true</span>,
+            <span class="ident">exit_on_error</span>: <span class="bool-val">false</span>,
+            <span class="ident">print_commands</span>: <span class="bool-val">false</span>,
+        }
     }
 }
 </pre>

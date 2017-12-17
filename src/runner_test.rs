@@ -110,7 +110,7 @@ fn run_test_no_args_default_options() {
         exit 0
         "#,
         &args,
-        &options
+        &options,
     ).unwrap();
 
     assert_eq!(code, 0);

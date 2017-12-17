@@ -18,14 +18,14 @@ pub enum ErrorInfo {
     /// Root error
     IOError(Error),
     /// Description text of the error reason
-    Description(&'static str)
+    Description(&'static str),
 }
 
 #[derive(Debug)]
 /// Error struct
 pub struct ScriptError {
     /// Holds the error information
-    pub info: ErrorInfo
+    pub info: ErrorInfo,
 }
 
 impl error::Error for ScriptError {
@@ -48,10 +48,7 @@ impl error::Error for ScriptError {
 
 impl Display for ScriptError {
     /// Formats the value using the given formatter.
-    fn fmt(
-        &self,
-        format: &mut fmt::Formatter,
-    ) -> Result<(), fmt::Error> {
+    fn fmt(&self, format: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         match self.info {
             ErrorInfo::IOError(ref cause) => cause.fmt(format),
             ErrorInfo::Description(description) => description.fmt(format),
@@ -64,17 +61,22 @@ impl Display for ScriptError {
 pub struct ScriptOptions {
     /// Defines the requested runner (defaults to cmd in windows and sh for other platforms)
     pub runner: Option<String>,
-    /// Defines if to print the output to the parent process, or capture and return the output (default)
+    /// False to print the output to the parent process, or capture and return the output (default)
     pub capture_output: bool,
-    /// Sets the -e flag in the script to exit on any command error found inside the script (not available for windows)
+    /// Sets -e flag. Will exit on any error while running the script (not available for windows)
     pub exit_on_error: bool,
-    /// Sets the -x flag in the script to print each script command before invocation (not available for windows)
-    pub print_commands: bool
+    /// Sets -x flag for printing each script command before invocation (not available for windows)
+    pub print_commands: bool,
 }
 
 impl ScriptOptions {
     /// Returns new instance
     pub fn new() -> ScriptOptions {
-        ScriptOptions { runner: None, capture_output: true, exit_on_error: false, print_commands: false }
+        ScriptOptions {
+            runner: None,
+            capture_output: true,
+            exit_on_error: false,
+            print_commands: false,
+        }
     }
 }
