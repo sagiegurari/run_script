@@ -149,6 +149,7 @@ fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, Scr
 /// # Arguments
 ///
 /// * `script` - The script content
+/// * `args` - The script command line arguments
 /// * `options` - Options provided to the script runner
 ///
 /// # Example

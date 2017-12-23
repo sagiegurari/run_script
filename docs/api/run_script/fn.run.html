@@ -49,12 +49,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/run_script/lib.rs.html#122-128' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/run_script/lib.rs.html#167-173' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn run(<br>&nbsp;&nbsp;&nbsp;&nbsp;script: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;args: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, <br>&nbsp;&nbsp;&nbsp;&nbsp;options: &amp;<a class="type" href="../run_script/type.ScriptOptions.html" title="type run_script::ScriptOptions">ScriptOptions</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>, <a class="type" href="../run_script/type.ScriptError.html" title="type run_script::ScriptError">ScriptError</a>&gt;</pre><div class='docblock'><p>Invokes the provided script content and returns the invocation output.</p>
 
 <h1 id='arguments' class='section-header'><a href='#arguments'>Arguments</a></h1>
 <ul>
 <li><code>script</code> - The script content</li>
+<li><code>args</code> - The script command line arguments</li>
 <li><code>options</code> - Options provided to the script runner</li>
 </ul>
 

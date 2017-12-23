@@ -140,13 +140,13 @@ fn run_test_error_execute() {
 
 #[test]
 fn run_test_with_args() {
-    let args = vec!["ARG1".to_string()];
+    let args = vec!["ARG1".to_string(), "ARG2".to_string()];
     let options = ScriptOptions::new();
 
     let script = if cfg!(windows) {
-        "echo arg: %1"
+        "echo arg1: %1\necho arg2: %2"
     } else {
-        "echo arg: $1"
+        "echo arg1: $1\necho arg2: $2"
     };
 
     let (code, output, error) = run(script, &args, &options).unwrap();
@@ -155,5 +155,6 @@ fn run_test_with_args() {
     assert!(output.len() > 0);
     assert_eq!(error.len(), 0);
 
-    assert!(output.find("arg: ARG1").is_some());
+    assert!(output.find("arg1: ARG1").is_some());
+    assert!(output.find("arg2: ARG2").is_some());
 }

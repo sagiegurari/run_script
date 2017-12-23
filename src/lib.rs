@@ -30,6 +30,8 @@
 //!
 //! # Examples
 //!
+//! ## Basic Example
+//!
 //! ````
 //! extern crate run_script;
 //!
@@ -55,6 +57,46 @@
 //! }
 //! ````
 //!
+//! ## Macro Examples
+//!
+//! ```rust
+//! #[macro_use]
+//! extern crate run_script;
+//!
+//! use run_script::ScriptOptions;
+//!
+//! fn main() {
+//!     // simple call to run script with only the script text
+//!     let (code, output, error) = run_script!(
+//!         r#"
+//!         echo "Test"
+//!         exit 0
+//!         "#
+//!     ).unwrap();
+//!
+//!     // run script invoked with the script text and options
+//!     let options = ScriptOptions::new();
+//!     let (code, output, error) = run_script!(
+//!         r#"
+//!         echo "Test"
+//!         exit 0
+//!         "#,
+//!         &options
+//!     ).unwrap();
+//!
+//!     // run script invoked with all arguments
+//!     let options = ScriptOptions::new();
+//!     let (code, output, error) = run_script!(
+//!         r#"
+//!         echo "Test"
+//!         exit 0
+//!         "#,
+//!         &vec!["ARG1".to_string(), "ARG2".to_string()],
+//!         &options
+//!     ).unwrap();
+//! }
+//! ```
+//!
 //! # Installation
 //! In order to use this library, just add it as a dependency:
 //!
@@ -77,6 +119,8 @@ mod lib_test;
 
 extern crate rand;
 
+#[macro_use]
+mod macros;
 mod runner;
 pub mod types;
 
@@ -91,6 +135,7 @@ pub type ScriptOptions = types::ScriptOptions;
 /// # Arguments
 ///
 /// * `script` - The script content
+/// * `args` - The script command line arguments
 /// * `options` - Options provided to the script runner
 ///
 /// # Example

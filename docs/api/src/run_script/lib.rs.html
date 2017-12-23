@@ -172,6 +172,51 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">anonymous_parameters</span>, <span class="ident">coerce_never</span>, <span class="ident">const_err</span>, <span class="ident">dead_code</span>, <span class="ident">deprecated</span>, <span class="ident">exceeding_bitshifts</span>,
         <span class="ident">illegal_floating_point_literal_pattern</span>, <span class="ident">improper_ctypes</span>, <span class="ident">invalid_type_param_default</span>,
@@ -205,6 +250,8 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Examples</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! ## Basic Example</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! ````</span>
 <span class="doccomment">//! extern crate run_script;</span>
 <span class="doccomment">//!</span>
@@ -230,6 +277,46 @@
 <span class="doccomment">//! }</span>
 <span class="doccomment">//! ````</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! ## Macro Examples</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! #[macro_use]</span>
+<span class="doccomment">//! extern crate run_script;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! use run_script::ScriptOptions;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() {</span>
+<span class="doccomment">//!     // simple call to run script with only the script text</span>
+<span class="doccomment">//!     let (code, output, error) = run_script!(</span>
+<span class="doccomment">//!         r#&quot;</span>
+<span class="doccomment">//!         echo &quot;Test&quot;</span>
+<span class="doccomment">//!         exit 0</span>
+<span class="doccomment">//!         &quot;#</span>
+<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     // run script invoked with the script text and options</span>
+<span class="doccomment">//!     let options = ScriptOptions::new();</span>
+<span class="doccomment">//!     let (code, output, error) = run_script!(</span>
+<span class="doccomment">//!         r#&quot;</span>
+<span class="doccomment">//!         echo &quot;Test&quot;</span>
+<span class="doccomment">//!         exit 0</span>
+<span class="doccomment">//!         &quot;#,</span>
+<span class="doccomment">//!         &amp;options</span>
+<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     // run script invoked with all arguments</span>
+<span class="doccomment">//!     let options = ScriptOptions::new();</span>
+<span class="doccomment">//!     let (code, output, error) = run_script!(</span>
+<span class="doccomment">//!         r#&quot;</span>
+<span class="doccomment">//!         echo &quot;Test&quot;</span>
+<span class="doccomment">//!         exit 0</span>
+<span class="doccomment">//!         &quot;#,</span>
+<span class="doccomment">//!         &amp;vec![&quot;ARG1&quot;.to_string(), &quot;ARG2&quot;.to_string()],</span>
+<span class="doccomment">//!         &amp;options</span>
+<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! # Installation</span>
 <span class="doccomment">//! In order to use this library, just add it as a dependency:</span>
 <span class="doccomment">//!</span>
@@ -252,6 +339,8 @@
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
 
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">mod</span> <span class="ident">macros</span>;
 <span class="kw">mod</span> <span class="ident">runner</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
 
@@ -266,6 +355,7 @@
 <span class="doccomment">/// # Arguments</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// * `script` - The script content</span>
+<span class="doccomment">/// * `args` - The script command line arguments</span>
 <span class="doccomment">/// * `options` - Options provided to the script runner</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Example</span>

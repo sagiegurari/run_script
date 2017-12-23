@@ -24,7 +24,7 @@ For this purpose, this library was created.
 ## Usage
 Simply include the library and invoke the run function with the script text and run options:
 
-````rust
+```rust
 extern crate run_script;
 
 use run_script::ScriptOptions;
@@ -51,7 +51,47 @@ fn main() {
     println!("Output: {}", output);
     println!("Error: {}", error);
 }
-````
+```
+
+The library also provides the run_script! macro for simpler usage.
+
+```rust
+#[macro_use]
+extern crate run_script;
+
+use run_script::ScriptOptions;
+
+fn main() {
+    // simple call to run script with only the script text
+    let (code, output, error) = run_script!(
+        r#"
+        echo "Test"
+        exit 0
+        "#
+    ).unwrap();
+
+    // run script invoked with the script text and options
+    let options = ScriptOptions::new();
+    let (code, output, error) = run_script!(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &options
+    ).unwrap();
+
+    // run script invoked with all arguments
+    let options = ScriptOptions::new();
+    let (code, output, error) = run_script!(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &vec!["ARG1".to_string(), "ARG2".to_string()],
+        &options
+    ).unwrap();
+}
+```
 
 <a name="installation"></a>
 ## Installation
