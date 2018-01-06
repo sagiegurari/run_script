@@ -17,7 +17,7 @@ fn main() {
         dir
         "#,
         &args,
-        &options
+        &options,
     ).unwrap();
 
     println!("Exit Code: {}", code);
