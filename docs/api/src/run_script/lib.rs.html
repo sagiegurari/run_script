@@ -230,6 +230,9 @@
 <span id="174">174</span>
 <span id="175">175</span>
 <span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">anonymous_parameters</span>, <span class="ident">bare_trait_object</span>, <span class="ident">box_pointers</span>, <span class="ident">const_err</span>, <span class="ident">dead_code</span>, <span class="ident">deprecated</span>,
         <span class="ident">elided_lifetime_in_path</span>, <span class="ident">exceeding_bitshifts</span>, <span class="ident">ignored_generic_bounds</span>,
@@ -354,6 +357,9 @@
 <span class="kw">mod</span> <span class="ident">lib_test</span>;
 
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">users</span>;
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">mod</span> <span class="ident">macros</span>;
