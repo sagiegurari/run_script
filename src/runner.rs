@@ -56,18 +56,26 @@ fn delete_file(file: &str) {
     remove_file(file).unwrap_or(());
 }
 
+#[cfg(windows)]
+fn get_additional_temp_path() -> Option<String> {
+    None
+}
+
+#[cfg(not(windows))]
+fn get_additional_temp_path() -> Option<String> {
+    get_current_username()
+}
+
 fn create_script_file(script: &String) -> Result<String, Error> {
     let name = env!("CARGO_PKG_NAME");
     let file_name: String = thread_rng().gen_ascii_chars().take(10).collect();
 
     let mut file_path = env::temp_dir();
 
-    if cfg!(not(windows)) {
-        match get_current_username() {
-            Some(user_name) => file_path.push(user_name),
-            None => {}
-        };
-    }
+    match get_additional_temp_path() {
+        Some(additional_path) => file_path.push(additional_path),
+        None => {}
+    };
 
     file_path.push(name);
 
