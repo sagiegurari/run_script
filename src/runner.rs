@@ -17,6 +17,9 @@ use std::io::prelude::*;
 use std::process::{Command, ExitStatus, Output, Stdio};
 use types::{ErrorInfo, ScriptError, ScriptOptions};
 
+#[cfg(not(windows))]
+use users::get_current_username;
+
 /// Returns the exit code
 fn get_exit_code(code: ExitStatus) -> i32 {
     if !code.success() {
@@ -58,6 +61,14 @@ fn create_script_file(script: &String) -> Result<String, Error> {
     let file_name: String = thread_rng().gen_ascii_chars().take(10).collect();
 
     let mut file_path = env::temp_dir();
+
+    if cfg!(not(windows)) {
+        match get_current_username() {
+            Some(user_name) => file_path.push(user_name),
+            None => {}
+        };
+    }
+
     file_path.push(name);
 
     // create parent directory

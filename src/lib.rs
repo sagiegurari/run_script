@@ -122,6 +122,9 @@ mod lib_test;
 
 extern crate rand;
 
+#[cfg(not(windows))]
+extern crate users;
+
 #[macro_use]
 mod macros;
 mod runner;
