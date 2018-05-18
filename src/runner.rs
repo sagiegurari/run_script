@@ -12,8 +12,8 @@ use std::env;
 use std::env::current_dir;
 use std::fs::{create_dir_all, remove_file, File};
 use std::io;
-use std::io::Error;
 use std::io::prelude::*;
+use std::io::Error;
 use std::process::{Command, ExitStatus, Output, Stdio};
 use types::{ErrorInfo, ScriptError, ScriptOptions};
 

@@ -52,22 +52,16 @@
 /// ```
 #[macro_export]
 macro_rules! run_script {
-    ($script:expr) => (
-        {
-            let args = vec![];
-            let options = $crate::ScriptOptions::new();
-            $crate::run(&$script, &args, &options)
-        }
-    );
-    ($script:expr,$options:expr) => (
-        {
-            let args = vec![];
-            $crate::run(&$script, &args, &$options)
-        }
-    );
-    ($script:expr,$args:expr,$options:expr) => (
-        {
-            $crate::run(&$script, &$args, &$options)
-        }
-    );
+    ($script:expr) => {{
+        let args = vec![];
+        let options = $crate::ScriptOptions::new();
+        $crate::run(&$script, &args, &options)
+    }};
+    ($script:expr, $options:expr) => {{
+        let args = vec![];
+        $crate::run(&$script, &args, &$options)
+    }};
+    ($script:expr, $args:expr, $options:expr) => {{
+        $crate::run(&$script, &$args, &$options)
+    }};
 }
