@@ -7,6 +7,7 @@
 #[path = "./runner_test.rs"]
 mod runner_test;
 
+use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use std::env;
 use std::env::current_dir;
@@ -14,6 +15,7 @@ use std::fs::{create_dir_all, remove_file, File};
 use std::io;
 use std::io::prelude::*;
 use std::io::Error;
+use std::iter;
 use std::process::{Command, ExitStatus, Output, Stdio};
 use types::{ErrorInfo, ScriptError, ScriptOptions};
 
@@ -68,7 +70,12 @@ fn get_additional_temp_path() -> Option<String> {
 
 fn create_script_file(script: &String) -> Result<String, Error> {
     let name = env!("CARGO_PKG_NAME");
-    let file_name: String = thread_rng().gen_ascii_chars().take(10).collect();
+
+    let mut rng = thread_rng();
+    let file_name: String = iter::repeat(())
+        .map(|()| rng.sample(Alphanumeric))
+        .take(10)
+        .collect();
 
     let mut file_path = env::temp_dir();
 
