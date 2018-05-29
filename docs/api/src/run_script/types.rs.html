@@ -123,7 +123,7 @@
     <span class="doccomment">/// The lower-level cause of this error, if any.</span>
     <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">info</span> {
-            <span class="ident">ErrorInfo</span>::<span class="ident">IOError</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">cause</span> <span class="kw">as</span> <span class="kw-2">&amp;</span><span class="ident">error</span>::<span class="ident">Error</span>),
+            <span class="ident">ErrorInfo</span>::<span class="ident">IOError</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">cause</span>),
             <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }

@@ -40,7 +40,7 @@ impl error::Error for ScriptError {
     /// The lower-level cause of this error, if any.
     fn cause(&self) -> Option<&error::Error> {
         match self.info {
-            ErrorInfo::IOError(ref cause) => Some(cause as &error::Error),
+            ErrorInfo::IOError(ref cause) => Some(cause),
             _ => None,
         }
     }
