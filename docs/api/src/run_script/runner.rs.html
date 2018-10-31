@@ -273,6 +273,7 @@
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./runner_test.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">runner_test</span>;
 
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">types</span>::{<span class="ident">ErrorInfo</span>, <span class="ident">ScriptError</span>, <span class="ident">ScriptOptions</span>};
 <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::<span class="ident">Alphanumeric</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">thread_rng</span>, <span class="ident">Rng</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">env</span>;
@@ -283,7 +284,6 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">process</span>::{<span class="ident">Command</span>, <span class="ident">ExitStatus</span>, <span class="ident">Output</span>, <span class="ident">Stdio</span>};
-<span class="kw">use</span> <span class="ident">types</span>::{<span class="ident">ErrorInfo</span>, <span class="ident">ScriptError</span>, <span class="ident">ScriptOptions</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>
 <span class="kw">use</span> <span class="ident">users</span>::<span class="ident">get_current_username</span>;
