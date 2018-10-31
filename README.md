@@ -113,7 +113,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
-| 2018-08-09  | v0.1.20 | Maintenance |
+| 2018-10-31  | v0.1.21 | Maintenance |
 | 2018-03-20  | v0.1.14 | Fix permissions issue (#2) |
 | 2017-12-23  | v0.1.10 | New run_script! macro |
 | 2017-11-04  | v0.1.1  | Initial release. |

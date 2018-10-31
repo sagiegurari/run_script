@@ -65,7 +65,15 @@ fn get_additional_temp_path() -> Option<String> {
 
 #[cfg(not(windows))]
 fn get_additional_temp_path() -> Option<String> {
-    get_current_username()
+    let username = get_current_username();
+
+    match username {
+        Some(os_value) => match os_value.into_string() {
+            Ok(value) => Some(value),
+            Err(_) => None,
+        },
+        None => None,
+    }
 }
 
 fn create_script_file(script: &String) -> Result<String, Error> {
