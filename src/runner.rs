@@ -7,6 +7,7 @@
 #[path = "./runner_test.rs"]
 mod runner_test;
 
+use super::types::{ErrorInfo, ScriptError, ScriptOptions};
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use std::env;
@@ -17,7 +18,6 @@ use std::io::prelude::*;
 use std::io::Error;
 use std::iter;
 use std::process::{Command, ExitStatus, Output, Stdio};
-use types::{ErrorInfo, ScriptError, ScriptOptions};
 
 #[cfg(not(windows))]
 use users::get_current_username;
