@@ -7,7 +7,7 @@
 #[path = "./runner_test.rs"]
 mod runner_test;
 
-use super::types::{ErrorInfo, ScriptError, ScriptOptions};
+use crate::types::{ErrorInfo, ScriptError, ScriptOptions};
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use std::env;
