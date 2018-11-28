@@ -1,6 +1,6 @@
 [package]
 name = "run_script"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Run shell scripts in rust."
 license = "Apache-2.0"
@@ -23,10 +23,10 @@ include = [
 ]
 
 [dependencies]
-rand = "^0.6.0"
+rand = "^0.6.1"
 
 [target.'cfg(not(windows))'.dependencies]
-users = "^0.8.0"
+users = "^0.8.1"
 
 [badges.travis-ci]
 branch = "master"
