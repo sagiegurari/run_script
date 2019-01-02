@@ -19,7 +19,8 @@ fn run(bencher: &mut Bencher) {
             "#,
             &args,
             &options,
-        ).unwrap();
+        )
+        .unwrap();
 
         assert_eq!(code, 0);
         assert!(output.len() > 0);

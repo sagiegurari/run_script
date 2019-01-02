@@ -111,7 +111,8 @@ fn run_test_no_args_default_options() {
         "#,
         &args,
         &options,
-    ).unwrap();
+    )
+    .unwrap();
 
     assert_eq!(code, 0);
     assert!(output.len() > 0);

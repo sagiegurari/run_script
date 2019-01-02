@@ -1,2 +1,2 @@
 var ALIASES = {};
-ALIASES['run_script'] = {};
+ALIASES["run_script"] = {};

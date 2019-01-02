@@ -10,7 +10,8 @@ fn run_macro_no_args_no_options_valid() {
         echo "Test"
         exit 0
         "#
-    ).unwrap();
+    )
+    .unwrap();
 
     assert_eq!(code, 0);
     assert!(output.len() > 0);
@@ -24,7 +25,8 @@ fn run_macro_no_args_no_options_error_output() {
         echo "Test"
         exit 123
         "#
-    ).unwrap();
+    )
+    .unwrap();
     let code = output.0;
 
     assert_eq!(code, 123);
@@ -40,7 +42,8 @@ fn run_macro_no_args_with_options() {
         exit 0
         "#,
         options
-    ).unwrap();
+    )
+    .unwrap();
 
     assert_eq!(code, 0);
     assert!(output.len() > 0);
@@ -69,7 +72,8 @@ fn run_macro_with_args_with_options() {
         &script,
         &vec!["ARG1".to_string(), "ARG2".to_string()],
         options
-    ).unwrap();
+    )
+    .unwrap();
 
     assert_eq!(code, 0);
     assert!(output.len() > 0);

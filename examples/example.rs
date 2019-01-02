@@ -18,7 +18,8 @@ fn main() {
         "#,
         &args,
         &options,
-    ).unwrap();
+    )
+    .unwrap();
 
     println!("Exit Code: {}", code);
     println!("Output: {}", output);

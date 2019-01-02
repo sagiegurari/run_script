@@ -9,7 +9,7 @@ fn script_error_description() {
     };
 
     assert_eq!(script_error.description(), "test");
-    assert!(script_error.cause().is_none());
+    assert!(script_error.source().is_none());
 
     let mut writer = Vec::new();
     write!(&mut writer, "formatted {}", script_error).unwrap();

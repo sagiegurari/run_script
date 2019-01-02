@@ -12,7 +12,8 @@ fn run_test() {
         "#,
         &args,
         &options,
-    ).unwrap();
+    )
+    .unwrap();
 
     assert_eq!(code, 0);
     assert!(output.len() > 0);
