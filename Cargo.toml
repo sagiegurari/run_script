@@ -26,7 +26,7 @@ include = [
 rand = "^0.6"
 
 [target.'cfg(not(windows))'.dependencies]
-users = "^0.8"
+users = "^0.9"
 
 [badges.travis-ci]
 branch = "master"
