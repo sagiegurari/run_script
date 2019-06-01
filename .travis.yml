@@ -6,9 +6,6 @@ rust:
 os:
   - linux
   - osx
-env:
-  global:
-    - RUST_BACKTRACE=1
 matrix:
   allow_failures:
     - rust: nightly
