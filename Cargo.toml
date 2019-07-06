@@ -23,7 +23,7 @@ include = [
 ]
 
 [dependencies]
-rand = "^0.6"
+rand = "^0.7"
 
 [target.'cfg(not(windows))'.dependencies]
 users = "^0.9"
