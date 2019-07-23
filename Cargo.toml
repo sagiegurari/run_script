@@ -1,6 +1,6 @@
 [package]
 name = "run_script"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Run shell scripts in rust."
 license = "Apache-2.0"
