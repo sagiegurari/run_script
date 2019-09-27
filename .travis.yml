@@ -9,6 +9,7 @@ os:
 matrix:
   allow_failures:
     - rust: nightly
+    - os: osx
 script:
   - cargo install --debug cargo-make
   - cargo make ci-flow
