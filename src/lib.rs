@@ -122,6 +122,7 @@
 //!
 //!     let args = vec![];
 //!
+//!     // run the script and get the script execution output
 //!     let (code, output, error) = run_script::run(
 //!         r#"
 //!         echo "Directory Info:"
@@ -134,6 +135,20 @@
 //!     println!("Exit Code: {}", code);
 //!     println!("Output: {}", output);
 //!     println!("Error: {}", error);
+//!
+//!     // run the script and get a handle to the running child process
+//!     let child = run_script::spawn(
+//!         r#"
+//!         echo "Directory Info:"
+//!         dir
+//!         "#,
+//!         &args,
+//!         &options
+//!     ).unwrap();
+//!
+//!     let spawn_output = child.wait_with_output().unwrap();
+//!
+//!     println!("Success: {}", &spawn_output.status.success());
 //! }
 //! ````
 //!
@@ -174,6 +189,14 @@
 //!         &vec!["ARG1".to_string(), "ARG2".to_string()],
 //!         &options
 //!     ).unwrap();
+//!
+//!     // spawn_script! works the same as run_script! but returns the child process handle
+//!     let child = spawn_script!(
+//!         r#"
+//!         echo "Test"
+//!         exit 0
+//!         "#
+//!     ).unwrap();
 //! }
 //! ```
 //!
@@ -201,6 +224,8 @@ mod lib_test;
 mod macros;
 mod runner;
 pub mod types;
+
+use std::process::Child;
 
 /// Error struct
 pub type ScriptError = types::ScriptError;
@@ -248,4 +273,42 @@ pub fn run(
     options: &ScriptOptions,
 ) -> Result<(i32, String, String), ScriptError> {
     runner::run(script, &args, &options)
+}
+
+/// Invokes the provided script content and returns a process handle.
+///
+/// # Arguments
+///
+/// * `script` - The script content
+/// * `args` - The script command line arguments
+/// * `options` - Options provided to the script runner
+///
+/// # Example
+///
+/// ````
+/// extern crate run_script;
+///
+/// use run_script::ScriptOptions;
+///
+/// fn main() {
+///     let options = ScriptOptions::new();
+///
+///     let args = vec![];
+///
+///     let child = run_script::spawn(
+///         r#"
+///         echo "Directory Info:"
+///         dir
+///         "#,
+///         &args,
+///         &options
+///     ).unwrap();
+/// }
+/// ````
+pub fn spawn(
+    script: &str,
+    args: &Vec<String>,
+    options: &ScriptOptions,
+) -> Result<Child, ScriptError> {
+    runner::spawn(script, &args, &options)
 }

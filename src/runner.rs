@@ -13,11 +13,10 @@ use rand::{thread_rng, Rng};
 use std::env;
 use std::env::current_dir;
 use std::fs::{create_dir_all, remove_file, File};
-use std::io;
 use std::io::prelude::*;
 use std::io::Error;
 use std::iter;
-use std::process::{Command, ExitStatus, Output, Stdio};
+use std::process::{Child, Command, ExitStatus, Stdio};
 
 #[cfg(not(windows))]
 use users::get_current_username;
@@ -34,12 +33,12 @@ fn get_exit_code(code: ExitStatus) -> i32 {
     }
 }
 
-/// Runs the requested command and return its output.
-fn run_command(
+/// Creates a command builder for the given input.
+fn create_command_builder(
     command_string: &str,
     args: &Vec<String>,
     options: &ScriptOptions,
-) -> io::Result<Output> {
+) -> Command {
     let mut command = Command::new(&command_string);
 
     for arg in args.iter() {
@@ -47,11 +46,13 @@ fn run_command(
     }
 
     command.stdin(Stdio::inherit());
-    if !options.capture_output {
+    if options.capture_output {
+        command.stdout(Stdio::piped()).stderr(Stdio::piped());
+    } else {
         command.stdout(Stdio::inherit()).stderr(Stdio::inherit());
     }
 
-    command.output()
+    command
 }
 
 fn delete_file(file: &str) {
@@ -178,18 +179,12 @@ fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, Scr
     }
 }
 
-/// Invokes the provided script content and returns the invocation output.
-///
-/// # Arguments
-///
-/// * `script` - The script content
-/// * `args` - The script command line arguments
-/// * `options` - Options provided to the script runner
-pub(crate) fn run(
+/// Invokes the provided script content and returns a process handle.
+fn spawn_script(
     script: &str,
     args: &Vec<String>,
     options: &ScriptOptions,
-) -> Result<(i32, String, String), ScriptError> {
+) -> Result<(Child, String), ScriptError> {
     match modify_script(&script.to_string(), &options) {
         Ok(updated_script) => match create_script_file(&updated_script) {
             Ok(file) => {
@@ -212,27 +207,82 @@ pub(crate) fn run(
 
                 all_args.extend(args.iter().cloned());
 
-                let result = run_command(&command, &all_args, &options);
+                let mut command = create_command_builder(&command, &all_args, &options);
 
-                delete_file(&file);
+                let result = command.spawn();
 
                 match result {
-                    Ok(output) => {
-                        let exit_code = get_exit_code(output.status);
-                        let stdout = String::from_utf8_lossy(&output.stdout).into_owned();
-                        let stderr = String::from_utf8_lossy(&output.stderr).into_owned();
+                    Ok(child) => Ok((child, file.clone())),
+                    Err(error) => {
+                        delete_file(&file);
 
-                        Ok((exit_code, stdout, stderr))
+                        Err(ScriptError {
+                            info: ErrorInfo::IOError(error),
+                        })
                     }
-                    Err(error) => Err(ScriptError {
-                        info: ErrorInfo::IOError(error),
-                    }),
                 }
             }
             Err(error) => Err(ScriptError {
                 info: ErrorInfo::IOError(error),
             }),
         },
+        Err(error) => Err(error),
+    }
+}
+
+/// Invokes the provided script content and returns a process handle.
+///
+/// # Arguments
+///
+/// * `script` - The script content
+/// * `args` - The script command line arguments
+/// * `options` - Options provided to the script runner
+pub(crate) fn spawn(
+    script: &str,
+    args: &Vec<String>,
+    options: &ScriptOptions,
+) -> Result<Child, ScriptError> {
+    let result = spawn_script(script, &args, &options);
+
+    match result {
+        Ok((child, _)) => Ok(child),
+        Err(error) => Err(error),
+    }
+}
+
+/// Invokes the provided script content and returns the invocation output.
+///
+/// # Arguments
+///
+/// * `script` - The script content
+/// * `args` - The script command line arguments
+/// * `options` - Options provided to the script runner
+pub(crate) fn run(
+    script: &str,
+    args: &Vec<String>,
+    options: &ScriptOptions,
+) -> Result<(i32, String, String), ScriptError> {
+    let result = spawn_script(script, &args, &options);
+
+    match result {
+        Ok((child, file)) => {
+            let process_result = child.wait_with_output();
+
+            delete_file(&file);
+
+            match process_result {
+                Ok(output) => {
+                    let exit_code = get_exit_code(output.status);
+                    let stdout = String::from_utf8_lossy(&output.stdout).into_owned();
+                    let stderr = String::from_utf8_lossy(&output.stderr).into_owned();
+
+                    Ok((exit_code, stdout, stderr))
+                }
+                Err(error) => Err(ScriptError {
+                    info: ErrorInfo::IOError(error),
+                }),
+            }
+        }
         Err(error) => Err(error),
     }
 }

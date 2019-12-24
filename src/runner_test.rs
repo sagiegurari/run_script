@@ -159,3 +159,25 @@ fn run_test_with_args() {
     assert!(output.find("arg1: ARG1").is_some());
     assert!(output.find("arg2: ARG2").is_some());
 }
+
+#[test]
+fn spawn_test_valid_exit_code() {
+    let args = vec![];
+    let options = ScriptOptions::new();
+
+    let child = spawn("exit 0", &args, &options).unwrap();
+
+    let output = child.wait_with_output().unwrap();
+    assert!(output.status.success());
+}
+
+#[test]
+fn spawn_test_error_exit_code() {
+    let args = vec![];
+    let options = ScriptOptions::new();
+
+    let child = spawn("exit 1", &args, &options).unwrap();
+
+    let output = child.wait_with_output().unwrap();
+    assert!(!output.status.success());
+}
