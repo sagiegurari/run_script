@@ -45,7 +45,7 @@ fn create_command_builder(
         command.arg(arg);
     }
 
-    command.stdin(Stdio::inherit());
+    command.stdin(Stdio::piped());
     if options.capture_output {
         command.stdout(Stdio::piped()).stderr(Stdio::piped());
     } else {
