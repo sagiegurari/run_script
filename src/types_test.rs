@@ -21,7 +21,8 @@ fn script_options_new() {
     let options = ScriptOptions::new();
 
     assert!(options.runner.is_none());
-    assert!(options.capture_output);
+    assert!(options.capture_output == IoOptions::Pipe);
+    assert!(options.capture_input == IoOptions::Inherit);
     assert!(!options.exit_on_error);
     assert!(!options.print_commands);
 }
