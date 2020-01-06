@@ -61,10 +61,10 @@ impl Display for ScriptError {
 pub struct ScriptOptions {
     /// Defines the requested runner (defaults to cmd in windows and sh for other platforms)
     pub runner: Option<String>,
-    /// Default is IoOptions::Pipe
-    pub capture_output: IoOptions,
-    /// Default is IoOptions::Inherit 
-    pub capture_input: IoOptions,
+    /// Default is IoOptions::Inherit
+    pub input_redirection: IoOptions,
+    /// Default is IoOptions::Pipe (only pipe enables to capture the output)
+    pub output_redirection: IoOptions,
     /// Sets -e flag. Will exit on any error while running the script (not available for windows)
     pub exit_on_error: bool,
     /// Sets -x flag for printing each script command before invocation (not available for windows)
@@ -79,7 +79,7 @@ pub enum IoOptions {
     /// Corresponds to Stdio::pipe()
     Pipe,
     /// Corresponds to Stdio::inherit()
-    Inherit
+    Inherit,
 }
 
 impl ScriptOptions {
@@ -87,8 +87,8 @@ impl ScriptOptions {
     pub fn new() -> ScriptOptions {
         ScriptOptions {
             runner: None,
-            capture_output: IoOptions::Pipe,
-            capture_input: IoOptions::Inherit,
+            input_redirection: IoOptions::Inherit,
+            output_redirection: IoOptions::Pipe,
             exit_on_error: false,
             print_commands: false,
         }

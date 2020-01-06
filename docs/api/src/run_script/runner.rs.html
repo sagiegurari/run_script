@@ -286,6 +286,11 @@
 <span id="286">286</span>
 <span id="287">287</span>
 <span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # command</span>
 <span class="doccomment">//!</span>
@@ -296,7 +301,7 @@
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./runner_test.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">runner_test</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">ErrorInfo</span>, <span class="ident">ScriptError</span>, <span class="ident">ScriptOptions</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">types</span>::{<span class="ident">ErrorInfo</span>, <span class="ident">IoOptions</span>, <span class="ident">ScriptError</span>, <span class="ident">ScriptOptions</span>};
 <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::<span class="ident">Alphanumeric</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">thread_rng</span>, <span class="ident">Rng</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">env</span>;
@@ -334,12 +339,17 @@
         <span class="ident">command</span>.<span class="ident">arg</span>(<span class="ident">arg</span>);
     }
 
-    <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>());
-    <span class="kw">if</span> <span class="ident">options</span>.<span class="ident">capture_output</span> {
-        <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>());
-    } <span class="kw">else</span> {
-        <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>());
-    }
+    <span class="kw">match</span> <span class="ident">options</span>.<span class="ident">input_redirection</span> {
+        <span class="ident">IoOptions</span>::<span class="ident">Null</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Inherit</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Pipe</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()),
+    };
+
+    <span class="kw">match</span> <span class="ident">options</span>.<span class="ident">output_redirection</span> {
+        <span class="ident">IoOptions</span>::<span class="ident">Null</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Inherit</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Pipe</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()),
+    };
 
     <span class="ident">command</span>
 }

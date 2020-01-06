@@ -115,8 +115,8 @@ fn run_test_no_args_default_options() {
     .unwrap();
 
     assert_eq!(code, 0);
-    assert!(output.len() > 0);
-    assert_eq!(error.len(), 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
 }
 
 #[test]
@@ -153,11 +153,137 @@ fn run_test_with_args() {
     let (code, output, error) = run(script, &args, &options).unwrap();
 
     assert_eq!(code, 0);
-    assert!(output.len() > 0);
-    assert_eq!(error.len(), 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
 
     assert!(output.find("arg1: ARG1").is_some());
     assert!(output.find("arg2: ARG2").is_some());
+}
+
+#[test]
+fn run_test_no_args_inherit_input() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    options.input_redirection = IoOptions::Inherit;
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
+}
+
+#[test]
+fn run_test_no_args_pipe_input() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    options.input_redirection = IoOptions::Pipe;
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
+}
+
+#[test]
+fn run_test_no_args_null_input() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    options.input_redirection = IoOptions::Null;
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
+}
+
+#[test]
+fn run_test_no_args_inherit_output() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    options.output_redirection = IoOptions::Inherit;
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(output.is_empty());
+    assert!(error.is_empty());
+}
+
+#[test]
+fn run_test_no_args_pipe_output() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    options.output_redirection = IoOptions::Pipe;
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
+}
+
+#[test]
+fn run_test_no_args_null_output() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    options.output_redirection = IoOptions::Null;
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(output.is_empty());
+    assert!(error.is_empty());
 }
 
 #[test]

@@ -132,6 +132,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 
 | Date        | Version | Description |
 | ----------- | ------- | ----------- |
+| 2020-01-06  | v0.5.0  | New input/output redirection options #9 |
 | 2019-12-24  | v0.4.0  | New spawn function and spawn_script! macro #7 |
 | 2018-03-20  | v0.1.14 | Fix permissions issue (#2) |
 | 2017-12-23  | v0.1.10 | New run_script! macro |
