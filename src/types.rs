@@ -61,12 +61,25 @@ impl Display for ScriptError {
 pub struct ScriptOptions {
     /// Defines the requested runner (defaults to cmd in windows and sh for other platforms)
     pub runner: Option<String>,
-    /// False to print the output to the parent process, or capture and return the output (default)
-    pub capture_output: bool,
+    /// Default is IoOptions::Pipe
+    pub capture_output: IoOptions,
+    /// Default is IoOptions::Inherit 
+    pub capture_input: IoOptions,
     /// Sets -e flag. Will exit on any error while running the script (not available for windows)
     pub exit_on_error: bool,
     /// Sets -x flag for printing each script command before invocation (not available for windows)
     pub print_commands: bool,
+}
+
+#[derive(Debug, Copy, Clone, PartialEq)]
+/// Options available for IO
+pub enum IoOptions {
+    /// Corresponds to Stdio::null()
+    Null,
+    /// Corresponds to Stdio::pipe()
+    Pipe,
+    /// Corresponds to Stdio::inherit()
+    Inherit
 }
 
 impl ScriptOptions {
@@ -74,7 +87,8 @@ impl ScriptOptions {
     pub fn new() -> ScriptOptions {
         ScriptOptions {
             runner: None,
-            capture_output: true,
+            capture_output: IoOptions::Pipe,
+            capture_input: IoOptions::Inherit,
             exit_on_error: false,
             print_commands: false,
         }

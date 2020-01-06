@@ -233,6 +233,9 @@ pub type ScriptError = types::ScriptError;
 /// Options available for invoking the script
 pub type ScriptOptions = types::ScriptOptions;
 
+/// Io Options available for invoking the script
+pub type IoOptions = types::IoOptions;
+
 /// Invokes the provided script content and returns the invocation output.
 ///
 /// # Arguments

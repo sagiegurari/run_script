@@ -7,7 +7,7 @@
 #[path = "./runner_test.rs"]
 mod runner_test;
 
-use crate::types::{ErrorInfo, ScriptError, ScriptOptions};
+use crate::types::{ErrorInfo, ScriptError, ScriptOptions, IoOptions};
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use std::env;
@@ -45,12 +45,17 @@ fn create_command_builder(
         command.arg(arg);
     }
 
-    command.stdin(Stdio::inherit());
-    if options.capture_output {
-        command.stdout(Stdio::piped()).stderr(Stdio::piped());
-    } else {
-        command.stdout(Stdio::inherit()).stderr(Stdio::inherit());
-    }
+    match options.capture_input {
+        IoOptions::Null => command.stdin(Stdio::null()),
+        IoOptions::Inherit => command.stdin(Stdio::inherit()),
+        IoOptions::Pipe => command.stdin(Stdio::piped()),
+    };
+
+    match options.capture_output {
+        IoOptions::Null => command.stdout(Stdio::null()).stderr(Stdio::null()),
+        IoOptions::Inherit => command.stdout(Stdio::inherit()).stderr(Stdio::inherit()),
+        IoOptions::Pipe => command.stdout(Stdio::piped()).stderr(Stdio::piped()),
+    };
 
     command
 }
