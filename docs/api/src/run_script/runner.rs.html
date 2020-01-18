@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/runner.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>runner.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../run_script/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/runner.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>runner.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../run_script/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -316,11 +316,11 @@
 <span class="kw">use</span> <span class="ident">users</span>::<span class="ident">get_current_username</span>;
 
 <span class="doccomment">/// Returns the exit code</span>
-<span class="kw">fn</span> <span class="ident">get_exit_code</span>(<span class="ident">code</span>: <span class="ident">ExitStatus</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> {
+<span class="kw">fn</span> <span class="ident">get_exit_code</span>(<span class="ident">code</span>: <span class="ident">ExitStatus</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
     <span class="kw">if</span> <span class="op">!</span><span class="ident">code</span>.<span class="ident">success</span>() {
         <span class="kw">match</span> <span class="ident">code</span>.<span class="ident">code</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>,
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="op">-</span><span class="number">1</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">value</span>,
+            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="op">-</span><span class="number">1</span>,
         }
     } <span class="kw">else</span> {
         <span class="number">0</span>
@@ -332,7 +332,7 @@
     <span class="ident">command_string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">args</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">ScriptOptions</span>,
-) <span class="op">-&gt;</span> <span class="ident">Command</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Command</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">command</span> <span class="op">=</span> <span class="ident">Command</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">command_string</span>);
 
     <span class="kw">for</span> <span class="ident">arg</span> <span class="kw">in</span> <span class="ident">args</span>.<span class="ident">iter</span>() {
@@ -340,15 +340,15 @@
     }
 
     <span class="kw">match</span> <span class="ident">options</span>.<span class="ident">input_redirection</span> {
-        <span class="ident">IoOptions</span>::<span class="ident">Null</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()),
-        <span class="ident">IoOptions</span>::<span class="ident">Inherit</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()),
-        <span class="ident">IoOptions</span>::<span class="ident">Pipe</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Null</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Inherit</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Pipe</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">command</span>.<span class="ident">stdin</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()),
     };
 
     <span class="kw">match</span> <span class="ident">options</span>.<span class="ident">output_redirection</span> {
-        <span class="ident">IoOptions</span>::<span class="ident">Null</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()),
-        <span class="ident">IoOptions</span>::<span class="ident">Inherit</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()),
-        <span class="ident">IoOptions</span>::<span class="ident">Pipe</span> <span class="op">=&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Null</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">null</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Inherit</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">inherit</span>()),
+        <span class="ident">IoOptions</span>::<span class="ident">Pipe</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">command</span>.<span class="ident">stdout</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()).<span class="ident">stderr</span>(<span class="ident">Stdio</span>::<span class="ident">piped</span>()),
     };
 
     <span class="ident">command</span>
@@ -359,24 +359,24 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
-<span class="kw">fn</span> <span class="ident">get_additional_temp_path</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">get_additional_temp_path</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="prelude-val">None</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">windows</span>))]</span>
-<span class="kw">fn</span> <span class="ident">get_additional_temp_path</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">get_additional_temp_path</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">username</span> <span class="op">=</span> <span class="ident">get_current_username</span>();
 
     <span class="kw">match</span> <span class="ident">username</span> {
-        <span class="prelude-val">Some</span>(<span class="ident">os_value</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">os_value</span>.<span class="ident">into_string</span>() {
-            <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>),
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        <span class="prelude-val">Some</span>(<span class="ident">os_value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">os_value</span>.<span class="ident">into_string</span>() {
+            <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>),
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         },
-        <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
     }
 }
 
-<span class="kw">fn</span> <span class="ident">create_script_file</span>(<span class="ident">script</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">create_script_file</span>(<span class="ident">script</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;CARGO_PKG_NAME&quot;</span>);
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();
@@ -388,15 +388,15 @@
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file_path</span> <span class="op">=</span> <span class="ident">env</span>::<span class="ident">temp_dir</span>();
 
     <span class="kw">match</span> <span class="ident">get_additional_temp_path</span>() {
-        <span class="prelude-val">Some</span>(<span class="ident">additional_path</span>) <span class="op">=&gt;</span> <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="ident">additional_path</span>),
-        <span class="prelude-val">None</span> <span class="op">=&gt;</span> {}
+        <span class="prelude-val">Some</span>(<span class="ident">additional_path</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="ident">additional_path</span>),
+        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {}
     };
 
     <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="ident">name</span>);
 
     <span class="comment">// create parent directory</span>
     <span class="kw">match</span> <span class="ident">create_dir_all</span>(<span class="kw-2">&amp;</span><span class="ident">file_path</span>) {
-        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="ident">file_name</span>);
             <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">windows</span>) {
                 <span class="ident">file_path</span>.<span class="ident">set_extension</span>(<span class="string">&quot;bat&quot;</span>);
@@ -407,26 +407,26 @@
             <span class="kw">let</span> <span class="ident">file_path_str</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">file_path</span>.<span class="ident">to_str</span>().<span class="ident">unwrap_or</span>(<span class="string">&quot;&quot;</span>);
 
             <span class="kw">match</span> <span class="ident">File</span>::<span class="ident">create</span>(<span class="kw-2">&amp;</span><span class="ident">file_path</span>) {
-                <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">file</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="ident">script</span>.<span class="ident">as_bytes</span>()) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">file_path_str</span>.<span class="ident">to_string</span>()),
-                    <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="kw-2">mut</span> <span class="ident">file</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">file</span>.<span class="ident">write_all</span>(<span class="ident">script</span>.<span class="ident">as_bytes</span>()) {
+                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">file_path_str</span>.<span class="ident">to_string</span>()),
+                    <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">delete_file</span>(<span class="kw-2">&amp;</span><span class="ident">file_path_str</span>);
 
                         <span class="prelude-val">Err</span>(<span class="ident">error</span>)
                     }
                 },
-                <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
+                <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
             }
         }
-        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
     }
 }
 
-<span class="kw">fn</span> <span class="ident">modify_script</span>(<span class="ident">script</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>, <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">ScriptOptions</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">ScriptError</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">modify_script</span>(<span class="ident">script</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>, <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">ScriptOptions</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">ScriptError</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">current_dir</span>() {
-        <span class="prelude-val">Ok</span>(<span class="ident">cwd_holder</span>) <span class="op">=&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">cwd_holder</span>) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">match</span> <span class="ident">cwd_holder</span>.<span class="ident">to_str</span>() {
-                <span class="prelude-val">Some</span>(<span class="ident">cwd</span>) <span class="op">=&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">cwd</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="comment">// create cd command</span>
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cd_command</span> <span class="op">=</span> <span class="string">&quot;cd &quot;</span>.<span class="ident">to_string</span>();
                     <span class="ident">cd_command</span>.<span class="ident">push_str</span>(<span class="ident">cwd</span>);
@@ -439,7 +439,7 @@
 
                     <span class="comment">// check if first line is shebang line</span>
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">insert_index</span> <span class="op">=</span>
-                        <span class="kw">if</span> <span class="ident">script_lines</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">script_lines</span>[<span class="number">0</span>].<span class="ident">starts_with</span>(<span class="string">&quot;#!&quot;</span>) {
+                        <span class="kw">if</span> <span class="ident">script_lines</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">script_lines</span>[<span class="number">0</span>].<span class="ident">starts_with</span>(<span class="string">&quot;#!&quot;</span>) {
                             <span class="number">1</span>
                         } <span class="kw">else</span> {
                             <span class="number">0</span>
@@ -465,14 +465,14 @@
 
                     <span class="prelude-val">Ok</span>(<span class="ident">updated_script</span>)
                 }
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
                     <span class="ident">info</span>: <span class="ident">ErrorInfo</span>::<span class="ident">Description</span>(
                         <span class="string">&quot;Unable to extract current working directory path.&quot;</span>,
                     ),
                 }),
             }
         }
-        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
             <span class="ident">info</span>: <span class="ident">ErrorInfo</span>::<span class="ident">IOError</span>(<span class="ident">error</span>),
         }),
     }
@@ -483,13 +483,13 @@
     <span class="ident">script</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">args</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">ScriptOptions</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Child</span>, <span class="ident">String</span>), <span class="ident">ScriptError</span><span class="op">&gt;</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Child</span>, <span class="ident">String</span>), <span class="ident">ScriptError</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">modify_script</span>(<span class="kw-2">&amp;</span><span class="ident">script</span>.<span class="ident">to_string</span>(), <span class="kw-2">&amp;</span><span class="ident">options</span>) {
-        <span class="prelude-val">Ok</span>(<span class="ident">updated_script</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">create_script_file</span>(<span class="kw-2">&amp;</span><span class="ident">updated_script</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">file</span>) <span class="op">=&gt;</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">updated_script</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">create_script_file</span>(<span class="kw-2">&amp;</span><span class="ident">updated_script</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">file</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">command</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">options</span>.<span class="ident">runner</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=&gt;</span> <span class="ident">value</span>,
-                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                    <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">value</span>,
+                    <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">windows</span>) {
                             <span class="string">&quot;cmd.exe&quot;</span>
                         } <span class="kw">else</span> {
@@ -511,8 +511,8 @@
                 <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">command</span>.<span class="ident">spawn</span>();
 
                 <span class="kw">match</span> <span class="ident">result</span> {
-                    <span class="prelude-val">Ok</span>(<span class="ident">child</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">child</span>, <span class="ident">file</span>.<span class="ident">clone</span>())),
-                    <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> {
+                    <span class="prelude-val">Ok</span>(<span class="ident">child</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">child</span>, <span class="ident">file</span>.<span class="ident">clone</span>())),
+                    <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">delete_file</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>);
 
                         <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
@@ -521,11 +521,11 @@
                     }
                 }
             }
-            <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
                 <span class="ident">info</span>: <span class="ident">ErrorInfo</span>::<span class="ident">IOError</span>(<span class="ident">error</span>),
             }),
         },
-        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
     }
 }
 
@@ -540,12 +540,12 @@
     <span class="ident">script</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">args</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">ScriptOptions</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Child</span>, <span class="ident">ScriptError</span><span class="op">&gt;</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Child</span>, <span class="ident">ScriptError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">spawn_script</span>(<span class="ident">script</span>, <span class="kw-2">&amp;</span><span class="ident">args</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>);
 
     <span class="kw">match</span> <span class="ident">result</span> {
-        <span class="prelude-val">Ok</span>((<span class="ident">child</span>, <span class="kw">_</span>)) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">child</span>),
-        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
+        <span class="prelude-val">Ok</span>((<span class="ident">child</span>, <span class="kw">_</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">child</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
     }
 }
 
@@ -560,30 +560,30 @@
     <span class="ident">script</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">args</span>: <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">options</span>: <span class="kw-2">&amp;</span><span class="ident">ScriptOptions</span>,
-) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">String</span>, <span class="ident">String</span>), <span class="ident">ScriptError</span><span class="op">&gt;</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">i32</span>, <span class="ident">String</span>, <span class="ident">String</span>), <span class="ident">ScriptError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">spawn_script</span>(<span class="ident">script</span>, <span class="kw-2">&amp;</span><span class="ident">args</span>, <span class="kw-2">&amp;</span><span class="ident">options</span>);
 
     <span class="kw">match</span> <span class="ident">result</span> {
-        <span class="prelude-val">Ok</span>((<span class="ident">child</span>, <span class="ident">file</span>)) <span class="op">=&gt;</span> {
+        <span class="prelude-val">Ok</span>((<span class="ident">child</span>, <span class="ident">file</span>)) <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">process_result</span> <span class="op">=</span> <span class="ident">child</span>.<span class="ident">wait_with_output</span>();
 
             <span class="ident">delete_file</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>);
 
             <span class="kw">match</span> <span class="ident">process_result</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">output</span>) <span class="op">=&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">output</span>) <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="kw">let</span> <span class="ident">exit_code</span> <span class="op">=</span> <span class="ident">get_exit_code</span>(<span class="ident">output</span>.<span class="ident">status</span>);
                     <span class="kw">let</span> <span class="ident">stdout</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="kw-2">&amp;</span><span class="ident">output</span>.<span class="ident">stdout</span>).<span class="ident">into_owned</span>();
                     <span class="kw">let</span> <span class="ident">stderr</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="kw-2">&amp;</span><span class="ident">output</span>.<span class="ident">stderr</span>).<span class="ident">into_owned</span>();
 
                     <span class="prelude-val">Ok</span>((<span class="ident">exit_code</span>, <span class="ident">stdout</span>, <span class="ident">stderr</span>))
                 }
-                <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
+                <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ScriptError</span> {
                     <span class="ident">info</span>: <span class="ident">ErrorInfo</span>::<span class="ident">IOError</span>(<span class="ident">error</span>),
                 }),
             }
         }
-        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
+        <span class="prelude-val">Err</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">error</span>),
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g., <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g., <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g., <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../";window.currentCrate = "run_script";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "run_script";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

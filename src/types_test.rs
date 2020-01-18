@@ -8,7 +8,7 @@ fn script_error_description() {
         info: ErrorInfo::Description("test"),
     };
 
-    assert_eq!(script_error.description(), "test");
+    assert_eq!(script_error.to_string(), "test");
     assert!(script_error.source().is_none());
 
     let mut writer = Vec::new();

@@ -29,16 +29,8 @@ pub struct ScriptError {
 }
 
 impl error::Error for ScriptError {
-    /// A short description of the error.
-    fn description(&self) -> &str {
-        match self.info {
-            ErrorInfo::IOError(ref cause) => cause.description(),
-            ErrorInfo::Description(description) => description,
-        }
-    }
-
     /// The lower-level cause of this error, if any.
-    fn cause(&self) -> Option<&error::Error> {
+    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
         match self.info {
             ErrorInfo::IOError(ref cause) => Some(cause),
             _ => None,
