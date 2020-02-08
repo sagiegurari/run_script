@@ -76,39 +76,57 @@ fn main() {
     // simple call to run script with only the script text
     let (code, output, error) = run_script!(
         r#"
-        echo "Test"
-        exit 0
-        "#
-    ).unwrap();
+         echo "Test"
+         exit 0
+         "#
+    )
+    .unwrap();
+
+    println!("Exit Code: {}", code);
+    println!("Output: {}", output);
+    println!("Error: {}", error);
 
     // run script invoked with the script text and options
     let options = ScriptOptions::new();
     let (code, output, error) = run_script!(
         r#"
-        echo "Test"
-        exit 0
-        "#,
+         echo "Test"
+         exit 0
+         "#,
         &options
-    ).unwrap();
+    )
+    .unwrap();
+
+    println!("Exit Code: {}", code);
+    println!("Output: {}", output);
+    println!("Error: {}", error);
 
     // run script invoked with all arguments
     let options = ScriptOptions::new();
     let (code, output, error) = run_script!(
         r#"
-        echo "Test"
-        exit 0
-        "#,
+         echo "Test"
+         exit 0
+         "#,
         &vec!["ARG1".to_string(), "ARG2".to_string()],
         &options
-    ).unwrap();
+    )
+    .unwrap();
+
+    println!("Exit Code: {}", code);
+    println!("Output: {}", output);
+    println!("Error: {}", error);
 
     // spawn_script! works the same as run_script! but returns the child process handle
     let child = spawn_script!(
         r#"
-        echo "Test"
-        exit 0
-        "#
-    ).unwrap();
+         echo "Test"
+         exit 0
+         "#
+    )
+    .unwrap();
+
+    println!("PID: {}", child.id());
 }
 ```
 
@@ -130,14 +148,7 @@ See [contributing guide](.github/CONTRIBUTING.md)
 <a name="history"></a>
 ## Release History
 
-| Date        | Version | Description |
-| ----------- | ------- | ----------- |
-| 2020-01-18  | v0.6.0  | Rust upgrade |
-| 2020-01-06  | v0.5.0  | New input/output redirection options #9 |
-| 2019-12-24  | v0.4.0  | New spawn function and spawn_script! macro #7 |
-| 2018-03-20  | v0.1.14 | Fix permissions issue (#2) |
-| 2017-12-23  | v0.1.10 | New run_script! macro |
-| 2017-11-04  | v0.1.1  | Initial release. |
+See [Changelog](CHANGELOG.md)
 
 <a name="license"></a>
 ## License

@@ -21,6 +21,14 @@ use std::process::{Child, Command, ExitStatus, Stdio};
 #[cfg(not(windows))]
 use users::get_current_username;
 
+#[cfg(test)]
+fn exit(code: i32) -> ! {
+    panic!(code);
+}
+
+#[cfg(not(test))]
+use std::process::exit;
+
 /// Returns the exit code
 fn get_exit_code(code: ExitStatus) -> i32 {
     if !code.success() {
@@ -289,5 +297,36 @@ pub(crate) fn run(
             }
         }
         Err(error) => Err(error),
+    }
+}
+
+/// Invokes the provided script content and returns the invocation output.
+/// In case of invocation error or error exit code, this function will exit the main process.
+///
+/// # Arguments
+///
+/// * `script` - The script content
+/// * `args` - The script command line arguments
+/// * `options` - Options provided to the script runner
+pub(crate) fn run_or_exit(
+    script: &str,
+    args: &Vec<String>,
+    options: &ScriptOptions,
+) -> (String, String) {
+    let result = run(script, &args, &options);
+
+    match result {
+        Ok((exit_code, output, error)) => {
+            if exit_code != 0 {
+                eprintln!("{}", error);
+                exit(exit_code)
+            } else {
+                (output, error)
+            }
+        }
+        Err(error) => {
+            eprintln!("{}", error);
+            exit(1)
+        }
     }
 }

@@ -170,6 +170,10 @@
 //!         "#
 //!     ).unwrap();
 //!
+//!     println!("Exit Code: {}", code);
+//!     println!("Output: {}", output);
+//!     println!("Error: {}", error);
+//!
 //!     // run script invoked with the script text and options
 //!     let options = ScriptOptions::new();
 //!     let (code, output, error) = run_script!(
@@ -179,6 +183,10 @@
 //!         "#,
 //!         &options
 //!     ).unwrap();
+//!
+//!     println!("Exit Code: {}", code);
+//!     println!("Output: {}", output);
+//!     println!("Error: {}", error);
 //!
 //!     // run script invoked with all arguments
 //!     let options = ScriptOptions::new();
@@ -198,6 +206,8 @@
 //!         exit 0
 //!         "#
 //!     ).unwrap();
+//!
+//!     println!("PID: {}", child.id());
 //! }
 //! ```
 //!
@@ -315,4 +325,42 @@ pub fn spawn(
     options: &ScriptOptions,
 ) -> Result<Child, ScriptError> {
     runner::spawn(script, &args, &options)
+}
+
+/// Invokes the provided script content and returns the invocation output.
+/// In case of invocation error or error exit code, this function will exit the main process.
+///
+/// # Arguments
+///
+/// * `script` - The script content
+/// * `args` - The script command line arguments
+/// * `options` - Options provided to the script runner
+///
+/// # Example
+///
+/// ````
+/// extern crate run_script;
+///
+/// use run_script::ScriptOptions;
+///
+/// fn main() {
+///     let options = ScriptOptions::new();
+///
+///     let args = vec![];
+///
+///     let (output, error) = run_script::run_or_exit(
+///         r#"
+///         echo "Directory Info:"
+///         dir
+///         "#,
+///         &args,
+///         &options
+///     );
+///
+///     println!("Output: {}", output);
+///     println!("Error: {}", error);
+/// }
+/// ````
+pub fn run_or_exit(script: &str, args: &Vec<String>, options: &ScriptOptions) -> (String, String) {
+    runner::run_or_exit(script, &args, &options)
 }
