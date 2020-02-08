@@ -11,7 +11,7 @@
 * [Installation](#installation)
 * [API Documentation](https://sagiegurari.github.io/run_script/)
 * [Contributing](.github/CONTRIBUTING.md)
-* [Release History](#history)
+* [Release History](CHANGELOG.md)
 * [License](#license)
 
 <a name="overview"></a>

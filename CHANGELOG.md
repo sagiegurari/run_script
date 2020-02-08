@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.6.1
+### v0.6.1 (2020-02-08)
 
 * New run_or_exit function and run_script_or_exit macro #10
 

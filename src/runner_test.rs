@@ -318,6 +318,15 @@ fn run_or_exit_error_code() {
 }
 
 #[test]
+#[should_panic]
+fn run_or_exit_invocation_error() {
+    let args = vec![];
+    let options = ScriptOptions::new();
+
+    run_or_exit("badcommand", &args, &options);
+}
+
+#[test]
 fn run_or_exit_pipe_output() {
     let args = vec![];
     let mut options = ScriptOptions::new();
