@@ -350,8 +350,7 @@ pub fn spawn(
 ///
 ///     let (output, error) = run_script::run_or_exit(
 ///         r#"
-///         echo "Directory Info:"
-///         dir
+///         echo "Hello World"
 ///         "#,
 ///         &args,
 ///         &options
