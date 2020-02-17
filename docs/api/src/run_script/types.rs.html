@@ -86,6 +86,10 @@
 <span id="86">86</span>
 <span id="87">87</span>
 <span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # types</span>
 <span class="doccomment">//!</span>
@@ -96,6 +100,7 @@
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./types_test.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">types_test</span>;
 
+<span class="kw">use</span> <span class="ident">fsio</span>::<span class="ident">error</span>::<span class="ident">FsIOError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span>;
@@ -106,6 +111,8 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ErrorInfo</span> {
     <span class="doccomment">/// Root error</span>
     <span class="ident">IOError</span>(<span class="ident">Error</span>),
+    <span class="doccomment">/// Root error</span>
+    <span class="ident">FsIOError</span>(<span class="ident">FsIOError</span>),
     <span class="doccomment">/// Description text of the error reason</span>
     <span class="ident">Description</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>),
 }
@@ -132,6 +139,7 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">info</span> {
             <span class="ident">ErrorInfo</span>::<span class="ident">IOError</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">cause</span>.<span class="ident">fmt</span>(<span class="ident">format</span>),
+            <span class="ident">ErrorInfo</span>::<span class="ident">FsIOError</span>(<span class="kw-2">ref</span> <span class="ident">cause</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">cause</span>.<span class="ident">fmt</span>(<span class="ident">format</span>),
             <span class="ident">ErrorInfo</span>::<span class="ident">Description</span>(<span class="ident">description</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">description</span>.<span class="ident">fmt</span>(<span class="ident">format</span>),
         }
     }

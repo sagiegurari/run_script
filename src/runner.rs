@@ -8,18 +8,10 @@
 mod runner_test;
 
 use crate::types::{ErrorInfo, IoOptions, ScriptError, ScriptOptions};
-use rand::distributions::Alphanumeric;
-use rand::{thread_rng, Rng};
-use std::env;
+use fsio;
+use fsio::error::FsIOError;
 use std::env::current_dir;
-use std::fs::{create_dir_all, remove_file, File};
-use std::io::prelude::*;
-use std::io::Error;
-use std::iter;
 use std::process::{Child, Command, ExitStatus, Stdio};
-
-#[cfg(not(windows))]
-use users::get_current_username;
 
 #[cfg(test)]
 fn exit(code: i32) -> ! {
@@ -68,71 +60,17 @@ fn create_command_builder(
     command
 }
 
-fn delete_file(file: &str) {
-    remove_file(file).unwrap_or(());
-}
+fn create_script_file(script: &String) -> Result<String, FsIOError> {
+    let extension = if cfg!(windows) { "bat" } else { "sh" };
+    let file_path = fsio::path::get_temporary_file_path(extension);
 
-#[cfg(windows)]
-fn get_additional_temp_path() -> Option<String> {
-    None
-}
+    match fsio::file::write_text_file(&file_path, script) {
+        Ok(_) => Ok(file_path),
+        Err(error) => {
+            fsio::file::delete_ignore_error(&file_path);
 
-#[cfg(not(windows))]
-fn get_additional_temp_path() -> Option<String> {
-    let username = get_current_username();
-
-    match username {
-        Some(os_value) => match os_value.into_string() {
-            Ok(value) => Some(value),
-            Err(_) => None,
-        },
-        None => None,
-    }
-}
-
-fn create_script_file(script: &String) -> Result<String, Error> {
-    let name = env!("CARGO_PKG_NAME");
-
-    let mut rng = thread_rng();
-    let file_name: String = iter::repeat(())
-        .map(|()| rng.sample(Alphanumeric))
-        .take(10)
-        .collect();
-
-    let mut file_path = env::temp_dir();
-
-    match get_additional_temp_path() {
-        Some(additional_path) => file_path.push(additional_path),
-        None => {}
-    };
-
-    file_path.push(name);
-
-    // create parent directory
-    match create_dir_all(&file_path) {
-        Ok(_) => {
-            file_path.push(file_name);
-            if cfg!(windows) {
-                file_path.set_extension("bat");
-            } else {
-                file_path.set_extension("sh");
-            };
-
-            let file_path_str = &file_path.to_str().unwrap_or("");
-
-            match File::create(&file_path) {
-                Ok(mut file) => match file.write_all(script.as_bytes()) {
-                    Ok(_) => Ok(file_path_str.to_string()),
-                    Err(error) => {
-                        delete_file(&file_path_str);
-
-                        Err(error)
-                    }
-                },
-                Err(error) => Err(error),
-            }
+            Err(error)
         }
-        Err(error) => Err(error),
     }
 }
 
@@ -227,7 +165,7 @@ fn spawn_script(
                 match result {
                     Ok(child) => Ok((child, file.clone())),
                     Err(error) => {
-                        delete_file(&file);
+                        fsio::file::delete_ignore_error(&file);
 
                         Err(ScriptError {
                             info: ErrorInfo::IOError(error),
@@ -236,7 +174,7 @@ fn spawn_script(
                 }
             }
             Err(error) => Err(ScriptError {
-                info: ErrorInfo::IOError(error),
+                info: ErrorInfo::FsIOError(error),
             }),
         },
         Err(error) => Err(error),
@@ -281,7 +219,7 @@ pub(crate) fn run(
         Ok((child, file)) => {
             let process_result = child.wait_with_output();
 
-            delete_file(&file);
+            fsio::file::delete_ignore_error(&file);
 
             match process_result {
                 Ok(output) => {

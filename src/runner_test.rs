@@ -6,7 +6,7 @@ use std::path::Path;
 fn create_script_file_and_delete() {
     let file = create_script_file(&"test".to_string()).unwrap();
     assert!(Path::new(&file).exists());
-    delete_file(&file);
+    fsio::file::delete_ignore_error(&file);
     assert!(!Path::new(&file).exists());
 }
 

@@ -7,6 +7,7 @@
 #[path = "./types_test.rs"]
 mod types_test;
 
+use fsio::error::FsIOError;
 use std::error;
 use std::fmt;
 use std::fmt::Display;
@@ -17,6 +18,8 @@ use std::io::Error;
 pub enum ErrorInfo {
     /// Root error
     IOError(Error),
+    /// Root error
+    FsIOError(FsIOError),
     /// Description text of the error reason
     Description(&'static str),
 }
@@ -43,6 +46,7 @@ impl Display for ScriptError {
     fn fmt(&self, format: &mut fmt::Formatter) -> Result<(), fmt::Error> {
         match self.info {
             ErrorInfo::IOError(ref cause) => cause.fmt(format),
+            ErrorInfo::FsIOError(ref cause) => cause.fmt(format),
             ErrorInfo::Description(description) => description.fmt(format),
         }
     }

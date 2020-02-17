@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.6.2 (2020-02-17)
+
+* Use fsio crate for file system apis.
+
 ### v0.6.1 (2020-02-08)
 
 * New run_or_exit function and run_script_or_exit macro #10
