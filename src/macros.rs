@@ -14,14 +14,11 @@
 /// # Examples
 ///
 /// ```rust
-/// #[macro_use]
-/// extern crate run_script;
-///
 /// use run_script::ScriptOptions;
 ///
 /// fn main() {
 ///     // simple call to run script with only the script text
-///     let (code, output, error) = run_script!(
+///     let (code, output, error) = run_script::run_script!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -30,7 +27,7 @@
 ///
 ///     // run script invoked with the script text and options
 ///     let options = ScriptOptions::new();
-///     let (code, output, error) = run_script!(
+///     let (code, output, error) = run_script::run_script!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -40,7 +37,7 @@
 ///
 ///     // run script invoked with all arguments
 ///     let options = ScriptOptions::new();
-///     let (code, output, error) = run_script!(
+///     let (code, output, error) = run_script::run_script!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -76,15 +73,13 @@ macro_rules! run_script {
 ///
 /// # Examples
 ///
-/// ```rust
-/// #[macro_use]
-/// extern crate run_script;
+/// ```rust_script;
 ///
 /// use run_script::ScriptOptions;
 ///
 /// fn main() {
 ///     // simple call to run script with only the script text
-///     let child = spawn_script!(
+///     let child = run_script::spawn_script!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -93,7 +88,7 @@ macro_rules! run_script {
 ///
 ///     // run script invoked with the script text and options
 ///     let options = ScriptOptions::new();
-///     let child = spawn_script!(
+///     let child = run_script::spawn_script!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -103,7 +98,7 @@ macro_rules! run_script {
 ///
 ///     // run script invoked with all arguments
 ///     let options = ScriptOptions::new();
-///     let child = spawn_script!(
+///     let child = run_script::spawn_script!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -140,14 +135,11 @@ macro_rules! spawn_script {
 /// # Examples
 ///
 /// ```rust
-/// #[macro_use]
-/// extern crate run_script;
-///
 /// use run_script::ScriptOptions;
 ///
 /// fn main() {
 ///     // simple call to the macro with only the script text
-///     let (output, error) = run_script_or_exit!(
+///     let (output, error) = run_script::run_script_or_exit!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -156,7 +148,7 @@ macro_rules! spawn_script {
 ///
 ///     // macro invoked with the script text and options
 ///     let options = ScriptOptions::new();
-///     let (output, error) = run_script_or_exit!(
+///     let (output, error) = run_script::run_script_or_exit!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
@@ -166,7 +158,7 @@ macro_rules! spawn_script {
 ///
 ///     // macro invoked with all arguments
 ///     let options = ScriptOptions::new();
-///     let (output, error) = run_script_or_exit!(
+///     let (output, error) = run_script::run_script_or_exit!(
 ///         r#"
 ///         echo "Test"
 ///         exit 0
