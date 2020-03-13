@@ -1,5 +1,4 @@
-extern crate run_script;
-
+use run_script;
 use run_script::ScriptOptions;
 
 fn main() {

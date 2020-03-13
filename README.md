@@ -62,7 +62,7 @@ fn main() {
 }
 ```
 
-The library also provides the ```run_script!``` and ```spawn_script!``` macros for simpler usage.
+The library also provides the ```run_script!```,  ```spawn_script!``` and ```run_script_or_exit!``` macros for simpler usage.
 
 ```rust
 use run_script::ScriptOptions;

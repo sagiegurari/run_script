@@ -1,7 +1,7 @@
 #![feature(test)]
-extern crate run_script;
 extern crate test;
 
+use run_script;
 use run_script::ScriptOptions;
 use test::Bencher;
 
