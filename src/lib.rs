@@ -113,9 +113,7 @@
 //!
 //! ## Basic Example
 //!
-//! ````
-//! extern crate run_script;
-//!
+//! ````use run_script;
 //! use run_script::ScriptOptions;
 //!
 //! fn main() {
@@ -126,12 +124,13 @@
 //!     // run the script and get the script execution output
 //!     let (code, output, error) = run_script::run(
 //!         r#"
-//!         echo "Directory Info:"
-//!         dir
-//!         "#,
+//!          echo "Directory Info:"
+//!          dir
+//!          "#,
 //!         &args,
-//!         &options
-//!     ).unwrap();
+//!         &options,
+//!     )
+//!     .unwrap();
 //!
 //!     println!("Exit Code: {}", code);
 //!     println!("Output: {}", output);
@@ -140,12 +139,13 @@
 //!     // run the script and get a handle to the running child process
 //!     let child = run_script::spawn(
 //!         r#"
-//!         echo "Directory Info:"
-//!         dir
-//!         "#,
+//!          echo "Directory Info:"
+//!          dir
+//!          "#,
 //!         &args,
-//!         &options
-//!     ).unwrap();
+//!         &options,
+//!     )
+//!     .unwrap();
 //!
 //!     let spawn_output = child.wait_with_output().unwrap();
 //!
@@ -156,57 +156,62 @@
 //! ## Macro Examples
 //!
 //! ```rust
-//! #[macro_use]
-//! extern crate run_script;
-//!
 //! use run_script::ScriptOptions;
-//!
+//! 
 //! fn main() {
 //!     // simple call to run script with only the script text
-//!     let (code, output, error) = run_script!(
+//!     let (code, output, error) = run_script::run_script!(
 //!         r#"
-//!         echo "Test"
-//!         exit 0
-//!         "#
-//!     ).unwrap();
-//!
+//!          echo "Test"
+//!          exit 0
+//!          "#
+//!     )
+//!     .unwrap();
+//! 
 //!     println!("Exit Code: {}", code);
 //!     println!("Output: {}", output);
 //!     println!("Error: {}", error);
-//!
+//! 
 //!     // run script invoked with the script text and options
 //!     let options = ScriptOptions::new();
-//!     let (code, output, error) = run_script!(
+//!     let (code, output, error) = run_script::run_script!(
 //!         r#"
-//!         echo "Test"
-//!         exit 0
-//!         "#,
+//!          echo "Test"
+//!          exit 0
+//!          "#,
 //!         &options
-//!     ).unwrap();
-//!
+//!     )
+//!     .unwrap();
+//! 
 //!     println!("Exit Code: {}", code);
 //!     println!("Output: {}", output);
 //!     println!("Error: {}", error);
-//!
+//! 
 //!     // run script invoked with all arguments
 //!     let options = ScriptOptions::new();
-//!     let (code, output, error) = run_script!(
+//!     let (code, output, error) = run_script::run_script!(
 //!         r#"
-//!         echo "Test"
-//!         exit 0
-//!         "#,
+//!          echo "Test"
+//!          exit 0
+//!          "#,
 //!         &vec!["ARG1".to_string(), "ARG2".to_string()],
 //!         &options
-//!     ).unwrap();
-//!
+//!     )
+//!     .unwrap();
+//! 
+//!     println!("Exit Code: {}", code);
+//!     println!("Output: {}", output);
+//!     println!("Error: {}", error);
+//! 
 //!     // spawn_script! works the same as run_script! but returns the child process handle
-//!     let child = spawn_script!(
+//!     let child = run_script::spawn_script!(
 //!         r#"
-//!         echo "Test"
-//!         exit 0
-//!         "#
-//!     ).unwrap();
-//!
+//!          echo "Test"
+//!          exit 0
+//!          "#
+//!     )
+//!     .unwrap();
+//! 
 //!     println!("PID: {}", child.id());
 //! }
 //! ```
@@ -261,8 +266,6 @@ pub type IoOptions = types::IoOptions;
 /// # Example
 ///
 /// ````
-/// extern crate run_script;
-///
 /// use run_script::ScriptOptions;
 ///
 /// fn main() {
@@ -303,8 +306,6 @@ pub fn run(
 /// # Example
 ///
 /// ````
-/// extern crate run_script;
-///
 /// use run_script::ScriptOptions;
 ///
 /// fn main() {
@@ -342,8 +343,6 @@ pub fn spawn(
 /// # Example
 ///
 /// ````
-/// extern crate run_script;
-///
 /// use run_script::ScriptOptions;
 ///
 /// fn main() {
