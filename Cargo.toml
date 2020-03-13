@@ -26,6 +26,9 @@ include = [
 [dependencies]
 fsio = { version = "^0.1", features = ["temp-path"] }
 
+[dev-dependencies]
+doc-comment = "^0.3"
+
 [badges.travis-ci]
 branch = "master"
 repository = "sagiegurari/run_script"

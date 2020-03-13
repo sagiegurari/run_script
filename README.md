@@ -25,8 +25,6 @@ For this purpose, this library was created.
 Simply include the library and invoke the run/spawn function with the script text and run options:
 
 ```rust
-extern crate run_script;
-
 use run_script::ScriptOptions;
 
 fn main() {
@@ -67,14 +65,11 @@ fn main() {
 The library also provides the ```run_script!``` and ```spawn_script!``` macros for simpler usage.
 
 ```rust
-#[macro_use]
-extern crate run_script;
-
 use run_script::ScriptOptions;
 
 fn main() {
     // simple call to run script with only the script text
-    let (code, output, error) = run_script!(
+    let (code, output, error) = run_script::run_script!(
         r#"
          echo "Test"
          exit 0
@@ -88,7 +83,7 @@ fn main() {
 
     // run script invoked with the script text and options
     let options = ScriptOptions::new();
-    let (code, output, error) = run_script!(
+    let (code, output, error) = run_script::run_script!(
         r#"
          echo "Test"
          exit 0
@@ -103,7 +98,7 @@ fn main() {
 
     // run script invoked with all arguments
     let options = ScriptOptions::new();
-    let (code, output, error) = run_script!(
+    let (code, output, error) = run_script::run_script!(
         r#"
          echo "Test"
          exit 0
@@ -118,7 +113,7 @@ fn main() {
     println!("Error: {}", error);
 
     // spawn_script! works the same as run_script! but returns the child process handle
-    let child = spawn_script!(
+    let child = run_script::spawn_script!(
         r#"
          echo "Test"
          exit 0

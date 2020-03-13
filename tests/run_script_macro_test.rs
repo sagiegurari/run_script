@@ -1,11 +1,9 @@
-#[macro_use]
-extern crate run_script;
-
+use run_script;
 use run_script::ScriptOptions;
 
 #[test]
 fn run_macro_no_args_no_options_valid() {
-    let (code, output, error) = run_script!(
+    let (code, output, error) = run_script::run_script!(
         r#"
         echo "Test"
         exit 0
@@ -20,7 +18,7 @@ fn run_macro_no_args_no_options_valid() {
 
 #[test]
 fn run_macro_no_args_no_options_error_output() {
-    let output = run_script!(
+    let output = run_script::run_script!(
         r#"
         echo "Test"
         exit 123
@@ -36,7 +34,7 @@ fn run_macro_no_args_no_options_error_output() {
 fn run_macro_no_args_with_options() {
     let options = ScriptOptions::new();
 
-    let (code, output, error) = run_script!(
+    let (code, output, error) = run_script::run_script!(
         r#"
         echo "Test"
         exit 0
@@ -68,7 +66,7 @@ fn run_macro_with_args_with_options() {
         "#
     };
 
-    let (code, output, error) = run_script!(
+    let (code, output, error) = run_script::run_script!(
         &script,
         &vec!["ARG1".to_string(), "ARG2".to_string()],
         options

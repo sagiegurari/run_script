@@ -1,11 +1,9 @@
-#[macro_use]
-extern crate run_script;
-
+use run_script;
 use run_script::ScriptOptions;
 
 #[test]
 fn spawn_macro_no_args_no_options_valid() {
-    let child = spawn_script!(
+    let child = run_script::spawn_script!(
         r#"
         echo "Test"
         exit 0
@@ -20,7 +18,7 @@ fn spawn_macro_no_args_no_options_valid() {
 
 #[test]
 fn spawn_macro_no_args_no_options_error_output() {
-    let child = spawn_script!(
+    let child = run_script::spawn_script!(
         r#"
         echo "Test"
         exit 123
@@ -37,7 +35,7 @@ fn spawn_macro_no_args_no_options_error_output() {
 fn spawn_macro_no_args_with_options() {
     let options = ScriptOptions::new();
 
-    let child = spawn_script!(
+    let child = run_script::spawn_script!(
         r#"
         echo "Test"
         exit 0
@@ -70,7 +68,7 @@ fn spawn_macro_with_args_with_options() {
         "#
     };
 
-    let child = spawn_script!(
+    let child = run_script::spawn_script!(
         &script,
         &vec!["ARG1".to_string(), "ARG2".to_string()],
         options

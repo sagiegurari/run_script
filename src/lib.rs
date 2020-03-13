@@ -231,6 +231,9 @@
 #[path = "./lib_test.rs"]
 mod lib_test;
 
+#[cfg(doctest)]
+doc_comment::doctest!("../README.md");
+
 #[macro_use]
 mod macros;
 mod runner;
