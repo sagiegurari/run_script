@@ -157,7 +157,7 @@
 //!
 //! ```rust
 //! use run_script::ScriptOptions;
-//! 
+//!
 //! fn main() {
 //!     // simple call to run script with only the script text
 //!     let (code, output, error) = run_script::run_script!(
@@ -167,11 +167,11 @@
 //!          "#
 //!     )
 //!     .unwrap();
-//! 
+//!
 //!     println!("Exit Code: {}", code);
 //!     println!("Output: {}", output);
 //!     println!("Error: {}", error);
-//! 
+//!
 //!     // run script invoked with the script text and options
 //!     let options = ScriptOptions::new();
 //!     let (code, output, error) = run_script::run_script!(
@@ -182,11 +182,11 @@
 //!         &options
 //!     )
 //!     .unwrap();
-//! 
+//!
 //!     println!("Exit Code: {}", code);
 //!     println!("Output: {}", output);
 //!     println!("Error: {}", error);
-//! 
+//!
 //!     // run script invoked with all arguments
 //!     let options = ScriptOptions::new();
 //!     let (code, output, error) = run_script::run_script!(
@@ -198,11 +198,11 @@
 //!         &options
 //!     )
 //!     .unwrap();
-//! 
+//!
 //!     println!("Exit Code: {}", code);
 //!     println!("Output: {}", output);
 //!     println!("Error: {}", error);
-//! 
+//!
 //!     // spawn_script! works the same as run_script! but returns the child process handle
 //!     let child = run_script::spawn_script!(
 //!         r#"
@@ -211,7 +211,7 @@
 //!          "#
 //!     )
 //!     .unwrap();
-//! 
+//!
 //!     println!("PID: {}", child.id());
 //! }
 //! ```
