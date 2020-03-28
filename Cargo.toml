@@ -29,16 +29,6 @@ fsio = { version = "^0.1", features = ["temp-path"] }
 [dev-dependencies]
 doc-comment = "^0.3"
 
-[badges.travis-ci]
-branch = "master"
-repository = "sagiegurari/run_script"
-
-[badges.appveyor]
-repository = "sagiegurari/run_script"
-service = "github"
-branch = "master"
-project_name = "sagiegurari/run-script"
-
 [badges.codecov]
 branch = "master"
 repository = "sagiegurari/run_script"
