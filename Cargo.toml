@@ -28,6 +28,7 @@ fsio = { version = "^0.1", features = ["temp-path"] }
 
 [dev-dependencies]
 doc-comment = "^0.3"
+rusty-hook = "^0.10"
 
 [badges.codecov]
 branch = "master"
