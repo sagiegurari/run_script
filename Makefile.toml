@@ -1,4 +1,7 @@
 
+[env]
+CARGO_MAKE_DOCS_README_SET_CRATE_VERSION = true
+
 [config]
 additional_profiles = [
     "ci-coverage-tasks",
