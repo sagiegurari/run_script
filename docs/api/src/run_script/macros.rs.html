@@ -183,14 +183,6 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # macros</span>
 <span class="doccomment">//!</span>
@@ -208,14 +200,11 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate run_script;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use run_script::ScriptOptions;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
 <span class="doccomment">///     // simple call to run script with only the script text</span>
-<span class="doccomment">///     let (code, output, error) = run_script!(</span>
+<span class="doccomment">///     let (code, output, error) = run_script::run_script!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -224,7 +213,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///     // run script invoked with the script text and options</span>
 <span class="doccomment">///     let options = ScriptOptions::new();</span>
-<span class="doccomment">///     let (code, output, error) = run_script!(</span>
+<span class="doccomment">///     let (code, output, error) = run_script::run_script!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -234,7 +223,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///     // run script invoked with all arguments</span>
 <span class="doccomment">///     let options = ScriptOptions::new();</span>
-<span class="doccomment">///     let (code, output, error) = run_script!(</span>
+<span class="doccomment">///     let (code, output, error) = run_script::run_script!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -270,15 +259,13 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate run_script;</span>
+<span class="doccomment">/// ```rust_script;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use run_script::ScriptOptions;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
 <span class="doccomment">///     // simple call to run script with only the script text</span>
-<span class="doccomment">///     let child = spawn_script!(</span>
+<span class="doccomment">///     let child = run_script::spawn_script!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -287,7 +274,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///     // run script invoked with the script text and options</span>
 <span class="doccomment">///     let options = ScriptOptions::new();</span>
-<span class="doccomment">///     let child = spawn_script!(</span>
+<span class="doccomment">///     let child = run_script::spawn_script!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -297,7 +284,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///     // run script invoked with all arguments</span>
 <span class="doccomment">///     let options = ScriptOptions::new();</span>
-<span class="doccomment">///     let child = spawn_script!(</span>
+<span class="doccomment">///     let child = run_script::spawn_script!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -334,14 +321,11 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate run_script;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use run_script::ScriptOptions;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
 <span class="doccomment">///     // simple call to the macro with only the script text</span>
-<span class="doccomment">///     let (output, error) = run_script_or_exit!(</span>
+<span class="doccomment">///     let (output, error) = run_script::run_script_or_exit!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -350,7 +334,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///     // macro invoked with the script text and options</span>
 <span class="doccomment">///     let options = ScriptOptions::new();</span>
-<span class="doccomment">///     let (output, error) = run_script_or_exit!(</span>
+<span class="doccomment">///     let (output, error) = run_script::run_script_or_exit!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>
@@ -360,7 +344,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">///     // macro invoked with all arguments</span>
 <span class="doccomment">///     let options = ScriptOptions::new();</span>
-<span class="doccomment">///     let (output, error) = run_script_or_exit!(</span>
+<span class="doccomment">///     let (output, error) = run_script::run_script_or_exit!(</span>
 <span class="doccomment">///         r#&quot;</span>
 <span class="doccomment">///         echo &quot;Test&quot;</span>
 <span class="doccomment">///         exit 0</span>

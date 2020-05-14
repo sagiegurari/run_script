@@ -363,19 +363,30 @@
 <span id="363">363</span>
 <span id="364">364</span>
 <span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
+<span id="372">372</span>
+<span id="373">373</span>
+<span id="374">374</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">deny</span>(
     <span class="ident">absolute_paths_not_starting_with_crate</span>,
     <span class="ident">ambiguous_associated_items</span>,
     <span class="ident">anonymous_parameters</span>,
+    <span class="ident">arithmetic_overflow</span>,
     <span class="ident">array_into_iter</span>,
     <span class="ident">bindings_with_variant_name</span>,
+    <span class="ident">coherence_leak_check</span>,
+    <span class="ident">conflicting_repr_hints</span>,
     <span class="ident">const_err</span>,
     <span class="ident">dead_code</span>,
     <span class="ident">deprecated</span>,
     <span class="ident">deprecated_in_future</span>,
     <span class="ident">ellipsis_inclusive_range_patterns</span>,
-    <span class="ident">exceeding_bitshifts</span>,
     <span class="ident">explicit_outlives_requirements</span>,
     <span class="ident">exported_private_dependencies</span>,
     <span class="ident">ill_formed_attribute_input</span>,
@@ -383,6 +394,8 @@
     <span class="ident">improper_ctypes</span>,
     <span class="ident">incomplete_features</span>,
     <span class="ident">indirect_structural_match</span>,
+    <span class="ident">inline_no_sanitize</span>,
+    <span class="ident">invalid_codeblock_attribute</span>,
     <span class="ident">invalid_type_param_default</span>,
     <span class="ident">invalid_value</span>,
     <span class="ident">irrefutable_let_patterns</span>,
@@ -391,6 +404,7 @@
     <span class="ident">macro_expanded_macro_exports_accessed_by_absolute_paths</span>,
     <span class="ident">meta_variable_misuse</span>,
     <span class="ident">missing_copy_implementations</span>,
+    <span class="ident">missing_crate_level_docs</span>,
     <span class="ident">missing_docs</span>,
     <span class="ident">missing_fragment_specifier</span>,
     <span class="ident">mutable_borrow_reservation_conflict</span>,
@@ -411,7 +425,7 @@
     <span class="ident">private_in_public</span>,
     <span class="ident">proc_macro_derive_resolution_fallback</span>,
     <span class="ident">pub_use_of_private_extern_crate</span>,
-    <span class="ident">redundant_semicolon</span>,
+    <span class="ident">redundant_semicolons</span>,
     <span class="ident">safe_packed_borrows</span>,
     <span class="ident">soft_unstable</span>,
     <span class="ident">stable_features</span>,
@@ -421,6 +435,7 @@
     <span class="ident">type_alias_bounds</span>,
     <span class="ident">tyvar_behind_raw_pointer</span>,
     <span class="ident">uncommon_codepoints</span>,
+    <span class="ident">unconditional_panic</span>,
     <span class="ident">unconditional_recursion</span>,
     <span class="ident">unknown_crate_types</span>,
     <span class="ident">unnameable_test_items</span>,
@@ -433,6 +448,7 @@
     <span class="ident">unused_allocation</span>,
     <span class="ident">unused_assignments</span>,
     <span class="ident">unused_attributes</span>,
+    <span class="ident">unused_braces</span>,
     <span class="ident">unused_comparisons</span>,
     <span class="ident">unused_doc_comments</span>,
     <span class="ident">unused_extern_crates</span>,
@@ -479,9 +495,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## Basic Example</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ````</span>
-<span class="doccomment">//! extern crate run_script;</span>
-<span class="doccomment">//!</span>
+<span class="doccomment">//! ````use run_script;</span>
 <span class="doccomment">//! use run_script::ScriptOptions;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() {</span>
@@ -492,12 +506,13 @@
 <span class="doccomment">//!     // run the script and get the script execution output</span>
 <span class="doccomment">//!     let (code, output, error) = run_script::run(</span>
 <span class="doccomment">//!         r#&quot;</span>
-<span class="doccomment">//!         echo &quot;Directory Info:&quot;</span>
-<span class="doccomment">//!         dir</span>
-<span class="doccomment">//!         &quot;#,</span>
+<span class="doccomment">//!          echo &quot;Directory Info:&quot;</span>
+<span class="doccomment">//!          dir</span>
+<span class="doccomment">//!          &quot;#,</span>
 <span class="doccomment">//!         &amp;args,</span>
-<span class="doccomment">//!         &amp;options</span>
-<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!         &amp;options,</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .unwrap();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;Exit Code: {}&quot;, code);</span>
 <span class="doccomment">//!     println!(&quot;Output: {}&quot;, output);</span>
@@ -506,12 +521,13 @@
 <span class="doccomment">//!     // run the script and get a handle to the running child process</span>
 <span class="doccomment">//!     let child = run_script::spawn(</span>
 <span class="doccomment">//!         r#&quot;</span>
-<span class="doccomment">//!         echo &quot;Directory Info:&quot;</span>
-<span class="doccomment">//!         dir</span>
-<span class="doccomment">//!         &quot;#,</span>
+<span class="doccomment">//!          echo &quot;Directory Info:&quot;</span>
+<span class="doccomment">//!          dir</span>
+<span class="doccomment">//!          &quot;#,</span>
 <span class="doccomment">//!         &amp;args,</span>
-<span class="doccomment">//!         &amp;options</span>
-<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!         &amp;options,</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .unwrap();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     let spawn_output = child.wait_with_output().unwrap();</span>
 <span class="doccomment">//!</span>
@@ -522,19 +538,17 @@
 <span class="doccomment">//! ## Macro Examples</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! #[macro_use]</span>
-<span class="doccomment">//! extern crate run_script;</span>
-<span class="doccomment">//!</span>
 <span class="doccomment">//! use run_script::ScriptOptions;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! fn main() {</span>
 <span class="doccomment">//!     // simple call to run script with only the script text</span>
-<span class="doccomment">//!     let (code, output, error) = run_script!(</span>
+<span class="doccomment">//!     let (code, output, error) = run_script::run_script!(</span>
 <span class="doccomment">//!         r#&quot;</span>
-<span class="doccomment">//!         echo &quot;Test&quot;</span>
-<span class="doccomment">//!         exit 0</span>
-<span class="doccomment">//!         &quot;#</span>
-<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!          echo &quot;Test&quot;</span>
+<span class="doccomment">//!          exit 0</span>
+<span class="doccomment">//!          &quot;#</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .unwrap();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;Exit Code: {}&quot;, code);</span>
 <span class="doccomment">//!     println!(&quot;Output: {}&quot;, output);</span>
@@ -542,13 +556,14 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     // run script invoked with the script text and options</span>
 <span class="doccomment">//!     let options = ScriptOptions::new();</span>
-<span class="doccomment">//!     let (code, output, error) = run_script!(</span>
+<span class="doccomment">//!     let (code, output, error) = run_script::run_script!(</span>
 <span class="doccomment">//!         r#&quot;</span>
-<span class="doccomment">//!         echo &quot;Test&quot;</span>
-<span class="doccomment">//!         exit 0</span>
-<span class="doccomment">//!         &quot;#,</span>
+<span class="doccomment">//!          echo &quot;Test&quot;</span>
+<span class="doccomment">//!          exit 0</span>
+<span class="doccomment">//!          &quot;#,</span>
 <span class="doccomment">//!         &amp;options</span>
-<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .unwrap();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;Exit Code: {}&quot;, code);</span>
 <span class="doccomment">//!     println!(&quot;Output: {}&quot;, output);</span>
@@ -556,22 +571,28 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     // run script invoked with all arguments</span>
 <span class="doccomment">//!     let options = ScriptOptions::new();</span>
-<span class="doccomment">//!     let (code, output, error) = run_script!(</span>
+<span class="doccomment">//!     let (code, output, error) = run_script::run_script!(</span>
 <span class="doccomment">//!         r#&quot;</span>
-<span class="doccomment">//!         echo &quot;Test&quot;</span>
-<span class="doccomment">//!         exit 0</span>
-<span class="doccomment">//!         &quot;#,</span>
+<span class="doccomment">//!          echo &quot;Test&quot;</span>
+<span class="doccomment">//!          exit 0</span>
+<span class="doccomment">//!          &quot;#,</span>
 <span class="doccomment">//!         &amp;vec![&quot;ARG1&quot;.to_string(), &quot;ARG2&quot;.to_string()],</span>
 <span class="doccomment">//!         &amp;options</span>
-<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .unwrap();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;Exit Code: {}&quot;, code);</span>
+<span class="doccomment">//!     println!(&quot;Output: {}&quot;, output);</span>
+<span class="doccomment">//!     println!(&quot;Error: {}&quot;, error);</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     // spawn_script! works the same as run_script! but returns the child process handle</span>
-<span class="doccomment">//!     let child = spawn_script!(</span>
+<span class="doccomment">//!     let child = run_script::spawn_script!(</span>
 <span class="doccomment">//!         r#&quot;</span>
-<span class="doccomment">//!         echo &quot;Test&quot;</span>
-<span class="doccomment">//!         exit 0</span>
-<span class="doccomment">//!         &quot;#</span>
-<span class="doccomment">//!     ).unwrap();</span>
+<span class="doccomment">//!          echo &quot;Test&quot;</span>
+<span class="doccomment">//!          exit 0</span>
+<span class="doccomment">//!          &quot;#</span>
+<span class="doccomment">//!     )</span>
+<span class="doccomment">//!     .unwrap();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!     println!(&quot;PID: {}&quot;, child.id());</span>
 <span class="doccomment">//! }</span>
@@ -596,6 +617,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;./lib_test.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">lib_test</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">doctest</span>)]</span>
+<span class="ident">doc_comment</span>::<span class="macro">doctest</span><span class="macro">!</span>(<span class="string">&quot;../README.md&quot;</span>);
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">mod</span> <span class="ident">macros</span>;
@@ -624,8 +648,6 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ````</span>
-<span class="doccomment">/// extern crate run_script;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use run_script::ScriptOptions;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
@@ -666,8 +688,6 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ````</span>
-<span class="doccomment">/// extern crate run_script;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use run_script::ScriptOptions;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
@@ -705,8 +725,6 @@
 <span class="doccomment">/// # Example</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ````</span>
-<span class="doccomment">/// extern crate run_script;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use run_script::ScriptOptions;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// fn main() {</span>
