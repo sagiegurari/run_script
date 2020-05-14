@@ -10,6 +10,7 @@ mod runner_test;
 use crate::types::{ErrorInfo, IoOptions, ScriptError, ScriptOptions};
 use fsio;
 use fsio::error::FsIOError;
+use fsio::path::from_path::FromPath;
 use std::env::current_dir;
 use std::process::{Child, Command, ExitStatus, Stdio};
 
@@ -84,7 +85,9 @@ fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, Scr
                     cd_command.push_str(cwd);
                     if let Some(ref working_directory) = options.working_directory {
                         cd_command.push_str(" && cd ");
-                        cd_command.push_str(working_directory);
+                        let working_directory_string: String =
+                            FromPath::from_path(&working_directory);
+                        cd_command.push_str(&working_directory_string);
                     }
 
                     let mut script_lines: Vec<String> = script

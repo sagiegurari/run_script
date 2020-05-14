@@ -12,6 +12,7 @@ use std::error;
 use std::fmt;
 use std::fmt::Display;
 use std::io::Error;
+use std::path::PathBuf;
 
 #[derive(Debug)]
 /// Holds the error information
@@ -58,7 +59,7 @@ pub struct ScriptOptions {
     /// Defines the requested runner (defaults to cmd in windows and sh for other platforms)
     pub runner: Option<String>,
     /// The working directory of the invocation
-    pub working_directory: Option<String>,
+    pub working_directory: Option<PathBuf>,
     /// Default is IoOptions::Inherit
     pub input_redirection: IoOptions,
     /// Default is IoOptions::Pipe (only pipe enables to capture the output)

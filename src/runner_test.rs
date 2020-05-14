@@ -1,6 +1,6 @@
 use super::*;
 use std::env::current_dir;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 #[test]
 fn create_script_file_and_delete() {
@@ -62,7 +62,7 @@ fn modify_script_exit_on_error() {
 #[test]
 fn modify_script_working_directory() {
     let mut options = ScriptOptions::new();
-    options.working_directory = Some("/usr/me/home".to_string());
+    options.working_directory = Some(PathBuf::from("/usr/me/home"));
 
     let cwd = current_dir().unwrap();
     let mut expected_script = "".to_string();
