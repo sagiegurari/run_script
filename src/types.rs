@@ -57,6 +57,8 @@ impl Display for ScriptError {
 pub struct ScriptOptions {
     /// Defines the requested runner (defaults to cmd in windows and sh for other platforms)
     pub runner: Option<String>,
+    /// The working directory of the invocation
+    pub working_directory: Option<String>,
     /// Default is IoOptions::Inherit
     pub input_redirection: IoOptions,
     /// Default is IoOptions::Pipe (only pipe enables to capture the output)
@@ -83,6 +85,7 @@ impl ScriptOptions {
     pub fn new() -> ScriptOptions {
         ScriptOptions {
             runner: None,
+            working_directory: None,
             input_redirection: IoOptions::Inherit,
             output_redirection: IoOptions::Pipe,
             exit_on_error: false,

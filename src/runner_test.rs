@@ -60,6 +60,22 @@ fn modify_script_exit_on_error() {
 }
 
 #[test]
+fn modify_script_working_directory() {
+    let mut options = ScriptOptions::new();
+    options.working_directory = Some("/usr/me/home".to_string());
+
+    let cwd = current_dir().unwrap();
+    let mut expected_script = "".to_string();
+    expected_script.push_str("cd ");
+    expected_script.push_str(cwd.to_str().unwrap());
+    expected_script.push_str(" && cd /usr/me/home\necho test\n\n");
+
+    let script = modify_script(&"echo test".to_string(), &options).unwrap();
+
+    assert_eq!(script, expected_script);
+}
+
+#[test]
 fn modify_script_print_commands() {
     let mut options = ScriptOptions::new();
     options.print_commands = true;

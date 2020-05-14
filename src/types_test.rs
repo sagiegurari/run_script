@@ -21,6 +21,7 @@ fn script_options_new() {
     let options = ScriptOptions::new();
 
     assert!(options.runner.is_none());
+    assert!(options.working_directory.is_none());
     assert_eq!(options.input_redirection, IoOptions::Inherit);
     assert_eq!(options.output_redirection, IoOptions::Pipe);
     assert!(!options.exit_on_error);

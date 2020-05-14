@@ -82,6 +82,10 @@ fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, Scr
                     // create cd command
                     let mut cd_command = "cd ".to_string();
                     cd_command.push_str(cwd);
+                    if let Some(ref working_directory) = options.working_directory {
+                        cd_command.push_str(" && cd ");
+                        cd_command.push_str(working_directory);
+                    }
 
                     let mut script_lines: Vec<String> = script
                         .trim()

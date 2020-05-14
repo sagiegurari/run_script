@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.6.3
+
+* Support custom working directory #13
+
 ### v0.6.2 (2020-02-17)
 
 * Use fsio crate for file system apis.
