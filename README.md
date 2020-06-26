@@ -24,6 +24,7 @@ For this purpose, this library was created.
 ## Usage
 Simply include the library and invoke the run/spawn function with the script text and run options:
 
+<!--{ "examples/function_examples.rs" | lines: 2 | code: rust }-->
 ```rust
 use run_script::ScriptOptions;
 
@@ -35,12 +36,13 @@ fn main() {
     // run the script and get the script execution output
     let (code, output, error) = run_script::run(
         r#"
-        echo "Directory Info:"
-        dir
-        "#,
+         echo "Directory Info:"
+         dir
+         "#,
         &args,
-        &options
-    ).unwrap();
+        &options,
+    )
+    .unwrap();
 
     println!("Exit Code: {}", code);
     println!("Output: {}", output);
@@ -49,21 +51,24 @@ fn main() {
     // run the script and get a handle to the running child process
     let child = run_script::spawn(
         r#"
-        echo "Directory Info:"
-        dir
-        "#,
+         echo "Directory Info:"
+         dir
+         "#,
         &args,
-        &options
-    ).unwrap();
+        &options,
+    )
+    .unwrap();
 
     let spawn_output = child.wait_with_output().unwrap();
 
     println!("Success: {}", &spawn_output.status.success());
 }
 ```
+<!--{ end }-->
 
-The library also provides the ```run_script!```,  ```spawn_script!``` and ```run_script_or_exit!``` macros for simpler usage.
+The library also provides the **run_script!**,  **spawn_script!** and **run_script_or_exit!** macros for simpler usage.
 
+<!--{ "examples/macro_examples.rs" | lines: 2 | code: rust }-->
 ```rust
 use run_script::ScriptOptions;
 
@@ -124,6 +129,7 @@ fn main() {
     println!("PID: {}", child.id());
 }
 ```
+<!--{ end }-->
 
 <a name="installation"></a>
 ## Installation
