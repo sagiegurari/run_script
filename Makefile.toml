@@ -1,6 +1,7 @@
 
 [config]
 additional_profiles = [
+  "all-default-tasks",
     "docs-all-modification-tasks",
     "ci-coverage-tasks",
     "ci-all-build-tasks",
