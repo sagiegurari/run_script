@@ -32,7 +32,6 @@
     indirect_structural_match,
     inline_no_sanitize,
     invalid_codeblock_attributes,
-    invalid_html_tags,
     invalid_type_param_default,
     invalid_value,
     irrefutable_let_patterns,
@@ -114,6 +113,7 @@
 #![allow(
     bare_trait_objects,
     box_pointers,
+    invalid_html_tags,
     elided_lifetimes_in_paths,
     missing_doc_code_examples,
     missing_debug_implementations,
