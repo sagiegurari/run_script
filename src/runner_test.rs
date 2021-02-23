@@ -16,9 +16,9 @@ fn modify_script_no_shebang_default_options() {
 
     let cwd = current_dir().unwrap();
     let mut expected_script = "".to_string();
-    expected_script.push_str("cd ");
+    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
-    expected_script.push_str("\necho test\n\n");
+    expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
 
@@ -31,9 +31,9 @@ fn modify_script_with_shebang_default_options() {
 
     let cwd = current_dir().unwrap();
     let mut expected_script = "#!/bin/bash\n".to_string();
-    expected_script.push_str("cd ");
+    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
-    expected_script.push_str("\necho test\n\n");
+    expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"#!/bin/bash\necho test".to_string(), &options).unwrap();
 
@@ -50,9 +50,9 @@ fn modify_script_exit_on_error() {
     if !cfg!(windows) {
         expected_script.push_str("set -e\n");
     }
-    expected_script.push_str("cd ");
+    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
-    expected_script.push_str("\necho test\n\n");
+    expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
 
@@ -66,9 +66,9 @@ fn modify_script_working_directory() {
 
     let cwd = current_dir().unwrap();
     let mut expected_script = "".to_string();
-    expected_script.push_str("cd ");
+    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
-    expected_script.push_str(" && cd /usr/me/home\necho test\n\n");
+    expected_script.push_str("\" && cd \"/usr/me/home\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
 
@@ -85,9 +85,9 @@ fn modify_script_print_commands() {
     if !cfg!(windows) {
         expected_script.push_str("set -x\n");
     }
-    expected_script.push_str("cd ");
+    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
-    expected_script.push_str("\necho test\n\n");
+    expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
 
@@ -106,9 +106,9 @@ fn modify_script_exit_on_error_and_print_commands() {
         expected_script.push_str("set -e\n");
         expected_script.push_str("set -x\n");
     }
-    expected_script.push_str("cd ");
+    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
-    expected_script.push_str("\necho test\n\n");
+    expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
 

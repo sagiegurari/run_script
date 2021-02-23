@@ -81,13 +81,15 @@ fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, Scr
             match cwd_holder.to_str() {
                 Some(cwd) => {
                     // create cd command
-                    let mut cd_command = "cd ".to_string();
+                    let mut cd_command = "cd \"".to_string();
                     cd_command.push_str(cwd);
+                    cd_command.push('"');
                     if let Some(ref working_directory) = options.working_directory {
-                        cd_command.push_str(" && cd ");
+                        cd_command.push_str(" && cd \"");
                         let working_directory_string: String =
                             FromPath::from_path(&working_directory);
                         cd_command.push_str(&working_directory_string);
+                        cd_command.push('"');
                     }
 
                     let mut script_lines: Vec<String> = script

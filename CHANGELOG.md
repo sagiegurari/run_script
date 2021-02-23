@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.6.4 (2021-02-23)
+
+* Fix issue with CWD containing spaces.
+
 ### v0.6.3 (2020-05-14)
 
 * Support custom working directory #13
