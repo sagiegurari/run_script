@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["run_script"] = [{"text":"impl Freeze for ErrorInfo","synthetic":true,"types":[]},{"text":"impl Freeze for ScriptError","synthetic":true,"types":[]},{"text":"impl Freeze for ScriptOptions","synthetic":true,"types":[]},{"text":"impl Freeze for IoOptions","synthetic":true,"types":[]}];
+implementors["run_script"] = [{"text":"impl Freeze for ScriptError","synthetic":true,"types":[]},{"text":"impl Freeze for ScriptOptions","synthetic":true,"types":[]},{"text":"impl Freeze for IoOptions","synthetic":true,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

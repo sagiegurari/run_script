@@ -4,9 +4,7 @@ use std::io::Write;
 
 #[test]
 fn script_error_description() {
-    let script_error = ScriptError {
-        info: ErrorInfo::Description("test"),
-    };
+    let script_error = ScriptError::Description("test");
 
     assert_eq!(script_error.to_string(), "test");
     assert!(script_error.source().is_none());

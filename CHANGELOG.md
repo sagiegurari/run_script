@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.7.0 (2021-03-09)
+
+* Make script error chainable.
+
 ### v0.6.4 (2021-02-23)
 
 * Fix issue with CWD containing spaces.

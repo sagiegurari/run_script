@@ -1,6 +1,6 @@
 [package]
 name = "run_script"
-version = "0.6.4"
+version = "0.7.0"
 authors = ["Sagie Gur-Ari <sagiegurari@gmail.com>"]
 description = "Run shell scripts in rust."
 license = "Apache-2.0"
@@ -24,7 +24,7 @@ include = [
 ]
 
 [dependencies]
-fsio = { version = "^0.1", features = ["temp-path"] }
+fsio = { version = "^0.2", features = ["temp-path"] }
 
 [dev-dependencies]
 doc-comment = "^0.3"

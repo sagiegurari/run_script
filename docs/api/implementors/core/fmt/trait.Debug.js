@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["run_script"] = [{"text":"impl Debug for ErrorInfo","synthetic":false,"types":[]},{"text":"impl Debug for ScriptError","synthetic":false,"types":[]},{"text":"impl Debug for ScriptOptions","synthetic":false,"types":[]},{"text":"impl Debug for IoOptions","synthetic":false,"types":[]}];
+implementors["run_script"] = [{"text":"impl Debug for ScriptError","synthetic":false,"types":[]},{"text":"impl Debug for ScriptOptions","synthetic":false,"types":[]},{"text":"impl Debug for IoOptions","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["ErrorInfo","Holds the error information"],["IoOptions","Options available for IO"]],"struct":[["ScriptError","Error struct"],["ScriptOptions","Options available for invoking the script"]]});
+initSidebarItems({"enum":[["IoOptions","Options available for IO"],["ScriptError","Holds the error information"]],"struct":[["ScriptOptions","Options available for invoking the script"]],"type":[["ScriptResult","Alias for result with script error"]]});

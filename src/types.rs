@@ -8,47 +8,43 @@
 mod types_test;
 
 use fsio::error::FsIOError;
-use std::error;
+use std::error::Error;
 use std::fmt;
 use std::fmt::Display;
-use std::io::Error;
+use std::io;
 use std::path::PathBuf;
+
+/// Alias for result with script error
+pub type ScriptResult<T> = Result<T, ScriptError>;
 
 #[derive(Debug)]
 /// Holds the error information
-pub enum ErrorInfo {
+pub enum ScriptError {
     /// Root error
-    IOError(Error),
+    IOError(io::Error),
     /// Root error
     FsIOError(FsIOError),
     /// Description text of the error reason
     Description(&'static str),
 }
 
-#[derive(Debug)]
-/// Error struct
-pub struct ScriptError {
-    /// Holds the error information
-    pub info: ErrorInfo,
-}
-
-impl error::Error for ScriptError {
-    /// The lower-level cause of this error, if any.
-    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
-        match self.info {
-            ErrorInfo::IOError(ref cause) => Some(cause),
-            _ => None,
+impl Display for ScriptError {
+    /// Formats the value using the given formatter.
+    fn fmt(&self, format: &mut fmt::Formatter) -> Result<(), fmt::Error> {
+        match self {
+            Self::IOError(ref cause) => cause.fmt(format),
+            Self::FsIOError(ref cause) => cause.fmt(format),
+            Self::Description(description) => description.fmt(format),
         }
     }
 }
 
-impl Display for ScriptError {
-    /// Formats the value using the given formatter.
-    fn fmt(&self, format: &mut fmt::Formatter) -> Result<(), fmt::Error> {
-        match self.info {
-            ErrorInfo::IOError(ref cause) => cause.fmt(format),
-            ErrorInfo::FsIOError(ref cause) => cause.fmt(format),
-            ErrorInfo::Description(description) => description.fmt(format),
+impl Error for ScriptError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        match self {
+            Self::Description(_) => None,
+            Self::IOError(error) => Some(error),
+            Self::FsIOError(error) => Some(error),
         }
     }
 }

@@ -275,6 +275,7 @@ mod macros;
 mod runner;
 pub mod types;
 
+use crate::types::ScriptResult;
 use std::process::Child;
 
 /// Error struct
@@ -322,7 +323,7 @@ pub fn run(
     script: &str,
     args: &Vec<String>,
     options: &ScriptOptions,
-) -> Result<(i32, String, String), ScriptError> {
+) -> ScriptResult<(i32, String, String)> {
     runner::run(script, &args, &options)
 }
 
@@ -354,11 +355,7 @@ pub fn run(
 ///     ).unwrap();
 /// }
 /// ````
-pub fn spawn(
-    script: &str,
-    args: &Vec<String>,
-    options: &ScriptOptions,
-) -> Result<Child, ScriptError> {
+pub fn spawn(script: &str, args: &Vec<String>, options: &ScriptOptions) -> ScriptResult<Child> {
     runner::spawn(script, &args, &options)
 }
 

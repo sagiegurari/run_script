@@ -7,10 +7,10 @@
 #[path = "./runner_test.rs"]
 mod runner_test;
 
-use crate::types::{ErrorInfo, IoOptions, ScriptError, ScriptOptions};
+use crate::types::{IoOptions, ScriptError, ScriptOptions, ScriptResult};
 use fsio;
-use fsio::error::FsIOError;
 use fsio::path::from_path::FromPath;
+use fsio::types::FsIOResult;
 use std::env::current_dir;
 use std::process::{Child, Command, ExitStatus, Stdio};
 
@@ -61,7 +61,7 @@ fn create_command_builder(
     command
 }
 
-fn create_script_file(script: &String) -> Result<String, FsIOError> {
+fn create_script_file(script: &String) -> FsIOResult<String> {
     let extension = if cfg!(windows) { "bat" } else { "sh" };
     let file_path = fsio::path::get_temporary_file_path(extension);
 
@@ -75,7 +75,7 @@ fn create_script_file(script: &String) -> Result<String, FsIOError> {
     }
 }
 
-fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, ScriptError> {
+fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<String> {
     match current_dir() {
         Ok(cwd_holder) => {
             match cwd_holder.to_str() {
@@ -126,16 +126,12 @@ fn modify_script(script: &String, options: &ScriptOptions) -> Result<String, Scr
 
                     Ok(updated_script)
                 }
-                None => Err(ScriptError {
-                    info: ErrorInfo::Description(
-                        "Unable to extract current working directory path.",
-                    ),
-                }),
+                None => Err(ScriptError::Description(
+                    "Unable to extract current working directory path.",
+                )),
             }
         }
-        Err(error) => Err(ScriptError {
-            info: ErrorInfo::IOError(error),
-        }),
+        Err(error) => Err(ScriptError::IOError(error)),
     }
 }
 
@@ -144,7 +140,7 @@ fn spawn_script(
     script: &str,
     args: &Vec<String>,
     options: &ScriptOptions,
-) -> Result<(Child, String), ScriptError> {
+) -> ScriptResult<(Child, String)> {
     match modify_script(&script.to_string(), &options) {
         Ok(updated_script) => match create_script_file(&updated_script) {
             Ok(file) => {
@@ -176,15 +172,11 @@ fn spawn_script(
                     Err(error) => {
                         fsio::file::delete_ignore_error(&file);
 
-                        Err(ScriptError {
-                            info: ErrorInfo::IOError(error),
-                        })
+                        Err(ScriptError::IOError(error))
                     }
                 }
             }
-            Err(error) => Err(ScriptError {
-                info: ErrorInfo::FsIOError(error),
-            }),
+            Err(error) => Err(ScriptError::FsIOError(error)),
         },
         Err(error) => Err(error),
     }
@@ -201,7 +193,7 @@ pub(crate) fn spawn(
     script: &str,
     args: &Vec<String>,
     options: &ScriptOptions,
-) -> Result<Child, ScriptError> {
+) -> ScriptResult<Child> {
     let result = spawn_script(script, &args, &options);
 
     match result {
@@ -221,7 +213,7 @@ pub(crate) fn run(
     script: &str,
     args: &Vec<String>,
     options: &ScriptOptions,
-) -> Result<(i32, String, String), ScriptError> {
+) -> ScriptResult<(i32, String, String)> {
     let result = spawn_script(script, &args, &options);
 
     match result {
@@ -238,9 +230,7 @@ pub(crate) fn run(
 
                     Ok((exit_code, stdout, stderr))
                 }
-                Err(error) => Err(ScriptError {
-                    info: ErrorInfo::IOError(error),
-                }),
+                Err(error) => Err(ScriptError::IOError(error)),
             }
         }
         Err(error) => Err(error),
