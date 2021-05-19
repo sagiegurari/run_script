@@ -378,7 +378,7 @@ fn run_or_exit_append_env() {
         .to_string();
     } else {
         script = r#"
-            echo %MY_TEST_VARIABLE%
+            echo $MY_TEST_VARIABLE
         "#
         .to_string()
     }
