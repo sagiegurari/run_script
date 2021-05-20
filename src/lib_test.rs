@@ -1,6 +1,5 @@
 use super::*;
 use doc_comment as _;
-use rusty_hook as _;
 
 #[test]
 fn run_test() {

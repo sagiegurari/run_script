@@ -137,7 +137,7 @@ In order to use this library, just add it as a dependency:
 
 ```ini
 [dependencies]
-run_script = "^0.7.0"
+run_script = "^0.8.0"
 ```
 
 ## API Documentation

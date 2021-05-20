@@ -93,6 +93,9 @@
 <span id="90">90</span>
 <span id="91">91</span>
 <span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! # types</span>
 <span class="doccomment">//!</span>
@@ -160,6 +163,8 @@
     <span class="kw">pub</span> <span class="ident">exit_on_error</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// Sets -x flag for printing each script command before invocation (not available for windows)</span>
     <span class="kw">pub</span> <span class="ident">print_commands</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// Environment environment variables to add before invocation</span>
+    <span class="kw">pub</span> <span class="ident">env_vars</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
@@ -183,6 +188,7 @@
             <span class="ident">output_redirection</span>: <span class="ident">IoOptions</span>::<span class="ident">Pipe</span>,
             <span class="ident">exit_on_error</span>: <span class="bool-val">false</span>,
             <span class="ident">print_commands</span>: <span class="bool-val">false</span>,
+            <span class="ident">env_vars</span>: <span class="prelude-val">None</span>,
         }
     }
 }
