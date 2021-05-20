@@ -369,16 +369,20 @@ fn run_or_exit_append_env() {
     env_vars.insert("MY_TEST_VARIABLE".to_string(), "MY_TEST_VALUE".to_string());
     options.env_vars = Some(env_vars);
 
+    std::env::set_var("PARENT_VAR", "PARENT_VALUE");
+
     let script: String;
 
     if cfg!(windows) {
         script = r#"
             ECHO %MY_TEST_VARIABLE%
+            ECHO %PARENT_VAR%
         "#
         .to_string();
     } else {
         script = r#"
             echo $MY_TEST_VARIABLE
+            echo $PARENT_VAR
         "#
         .to_string()
     }
@@ -386,6 +390,7 @@ fn run_or_exit_append_env() {
     let (output, error) = run_or_exit(&script, &args, &options);
 
     assert!(output.contains("MY_TEST_VALUE"));
+    assert!(output.contains("PARENT_VALUE"));
     assert!(error.is_empty());
 
     // Check if current environment is polluted

@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.8.0 (2021-05-20)
+
+* Support providing environment variables to script process #16 (thanks @kenr)
+
 ### v0.7.0 (2021-03-09)
 
 * Make script error chainable.
