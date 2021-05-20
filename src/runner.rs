@@ -42,6 +42,10 @@ fn create_command_builder(
 ) -> Command {
     let mut command = Command::new(&command_string);
 
+    if options.env_vars.is_some() {
+        command.envs(options.env_vars.as_ref().unwrap());
+    }
+
     for arg in args.iter() {
         command.arg(arg);
     }

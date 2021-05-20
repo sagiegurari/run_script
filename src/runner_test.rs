@@ -360,3 +360,37 @@ fn run_or_exit_pipe_output() {
     assert!(!output.is_empty());
     assert!(error.is_empty());
 }
+
+#[test]
+fn run_or_exit_append_env() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    let mut env_vars = std::collections::HashMap::<String, String>::new();
+    env_vars.insert("MY_TEST_VARIABLE".to_string(), "MY_TEST_VALUE".to_string());
+    options.env_vars = Some(env_vars);
+
+    let script: String;
+
+    if cfg!(windows) {
+        script = r#"
+            ECHO %MY_TEST_VARIABLE%
+        "#
+        .to_string();
+    } else {
+        script = r#"
+            echo $MY_TEST_VARIABLE
+        "#
+        .to_string()
+    }
+
+    let (output, error) = run_or_exit(&script, &args, &options);
+
+    assert!(output.contains("MY_TEST_VALUE"));
+    assert!(error.is_empty());
+
+    // Check if current environment is polluted
+    match std::env::var("MY_TEST_VARIABLE") {
+        Ok(_) => assert!(false, "The parent environment is polluted"),
+        Err(_) => (),
+    }
+}

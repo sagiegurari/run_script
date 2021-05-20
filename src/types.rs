@@ -64,6 +64,8 @@ pub struct ScriptOptions {
     pub exit_on_error: bool,
     /// Sets -x flag for printing each script command before invocation (not available for windows)
     pub print_commands: bool,
+    /// Environment environment variables to add before invocation
+    pub env_vars: Option<std::collections::HashMap<String, String>>,
 }
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -87,6 +89,7 @@ impl ScriptOptions {
             output_redirection: IoOptions::Pipe,
             exit_on_error: false,
             print_commands: false,
+            env_vars: None,
         }
     }
 }
