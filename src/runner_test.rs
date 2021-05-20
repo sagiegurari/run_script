@@ -387,4 +387,10 @@ fn run_or_exit_append_env() {
 
     assert!(output.contains("MY_TEST_VALUE"));
     assert!(error.is_empty());
+
+    // Check if current environment is polluted
+    match std::env::var("MY_TEST_VARIABLE") {
+        Ok(_) => assert!(false, "The parent environment is polluted"),
+        Err(_) => (),
+    }
 }

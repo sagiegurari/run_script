@@ -43,11 +43,7 @@ fn create_command_builder(
     let mut command = Command::new(&command_string);
 
     if options.env_vars.is_some() {
-        let env_vars = options.env_vars.as_ref().unwrap();
-
-        for (env_var, value) in env_vars {
-            std::env::set_var(env_var, value);
-        }
+        command.envs(options.env_vars.as_ref().unwrap());
     }
 
     for arg in args.iter() {
