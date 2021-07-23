@@ -16,7 +16,7 @@ use std::process::{Child, Command, ExitStatus, Stdio};
 
 #[cfg(test)]
 fn exit(code: i32) -> ! {
-    panic!(code);
+    panic!("{}", code);
 }
 
 #[cfg(not(test))]
