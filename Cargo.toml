@@ -24,10 +24,7 @@ include = [
 ]
 
 [dependencies]
-fsio = { version = "^0.2", features = ["temp-path"] }
-
-[target.'cfg(windows)'.dependencies]
-dunce = "^1"
+fsio = { version = "^0.3", features = ["temp-path"] }
 
 [dev-dependencies]
 doc-comment = "^0.3"

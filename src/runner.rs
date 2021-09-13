@@ -80,15 +80,11 @@ fn create_script_file(script: &String) -> FsIOResult<String> {
 }
 
 fn fix_path(path_string: &str) -> String {
-    #[cfg(windows)]
-    {
-        match dunce::canonicalize(path_string) {
-            Ok(value) => FromPath::from_path(&value),
-            Err(_) => path_string.to_string(),
-        }
+    if cfg!(windows) {
+        fsio::path::canonicalize_or(&path_string, &path_string)
+    } else {
+        path_string.to_string()
     }
-
-    path_string.to_string()
 }
 
 fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<String> {
