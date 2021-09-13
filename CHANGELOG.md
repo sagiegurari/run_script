@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.9.0
+### v0.9.0 (2021-09-13)
 
 * Add windows UNC path support (fsio upgrade)
 
