@@ -79,14 +79,24 @@ fn create_script_file(script: &String) -> FsIOResult<String> {
     }
 }
 
+fn fix_path(path_string: &str) -> String {
+    if cfg!(windows) {
+        fsio::path::canonicalize_or(&path_string, &path_string)
+    } else {
+        path_string.to_string()
+    }
+}
+
 fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<String> {
     match current_dir() {
         Ok(cwd_holder) => {
             match cwd_holder.to_str() {
                 Some(cwd) => {
+                    let cwd_string = fix_path(cwd);
+
                     // create cd command
                     let mut cd_command = "cd \"".to_string();
-                    cd_command.push_str(cwd);
+                    cd_command.push_str(&cwd_string);
                     cd_command.push('"');
                     if let Some(ref working_directory) = options.working_directory {
                         cd_command.push_str(" && cd \"");
@@ -160,7 +170,8 @@ fn spawn_script(
                 };
 
                 let mut all_args = if cfg!(windows) {
-                    vec!["/C".to_string(), file.to_string()]
+                    let win_file = fix_path(&file);
+                    vec!["/C".to_string(), win_file]
                 } else {
                     vec![file.to_string()]
                 };

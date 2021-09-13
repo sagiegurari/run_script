@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.9.0
+
+* Add windows UNC path support (fsio upgrade)
+
 ### v0.8.0 (2021-05-20)
 
 * Support providing environment variables to script process #16 (thanks @kenr)
