@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.10.0 (2022-08-06)
+
+* Update dependencies
+
 ### v0.9.0 (2021-09-13)
 
 * Add windows UNC path support (fsio upgrade)
