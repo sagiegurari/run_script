@@ -162,7 +162,11 @@ fn run_test_with_runner_args() {
 
     if cfg!(windows) {
         options.runner = Some("powershell".to_string());
-        options.runner_args = Some(vec!["-window".to_string(), "normal".to_string(), "-command".to_string()]);
+        options.runner_args = Some(vec![
+            "-window".to_string(),
+            "normal".to_string(),
+            "-command".to_string(),
+        ]);
     } else {
         options.runner_args = Some(vec!["--".to_string()]);
     }
@@ -237,7 +241,11 @@ fn run_test_with_runner_and_script_args() {
 
     if cfg!(windows) {
         options.runner = Some("powershell".to_string());
-        options.runner_args = Some(vec!["-window".to_string(), "normal".to_string(), "-command".to_string()]);
+        options.runner_args = Some(vec![
+            "-window".to_string(),
+            "normal".to_string(),
+            "-command".to_string(),
+        ]);
     } else {
         options.runner_args = Some(vec!["--".to_string()]);
     }
