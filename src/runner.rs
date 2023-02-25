@@ -173,10 +173,10 @@ fn spawn_script(
 
                 match options.runner_args {
                     Some(ref value) => runner_args.extend(value.iter().cloned()),
-                    None => ()
+                    None => (),
                 };
 
-                let mut all_args = if cfg!(windows) {
+                let mut all_args = if command.eq("cmd.exe") || command.eq("cmd") {
                     let win_file = fix_path(&file);
                     runner_args.extend(["/C".to_string(), win_file].iter().cloned());
                     runner_args

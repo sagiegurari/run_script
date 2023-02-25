@@ -54,7 +54,7 @@ impl Error for ScriptError {
 pub struct ScriptOptions {
     /// Defines the requested runner (defaults to cmd in windows and sh for other platforms)
     pub runner: Option<String>,
-    /// Args for the runner
+    /// Args for the runner (for cmd, /C will automatically be added at the end)
     pub runner_args: Option<Vec<String>>,
     /// The working directory of the invocation
     pub working_directory: Option<PathBuf>,
