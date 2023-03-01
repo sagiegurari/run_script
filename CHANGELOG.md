@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.10.1 (2023-03-01)
+
+* Enhancement: support runner arguments #20 (thanks @aria-aghaei)
+
 ### v0.10.0 (2022-08-06)
 
 * Update dependencies
