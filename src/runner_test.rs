@@ -156,9 +156,99 @@ fn run_test_error_execute() {
 }
 
 #[test]
+fn run_test_with_runner_args() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+
+    if cfg!(windows) {
+        options.runner = Some("powershell".to_string());
+        options.runner_args = Some(vec![
+            "-window".to_string(),
+            "normal".to_string(),
+            "-command".to_string(),
+        ]);
+    } else {
+        options.runner_args = Some(vec!["--".to_string()]);
+    }
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
+}
+
+#[test]
+fn run_test_with_bad_runner_args() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+
+    if cfg!(windows) {
+        options.runner = Some("powershell".to_string());
+        options.runner_args = Some(vec!["-notarealflag".to_string()]);
+    } else {
+        options.runner_args = Some(vec!["-notarealflag".to_string(), "--".to_string()]);
+    }
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_ne!(code, 0);
+    assert!(output.is_empty());
+    assert!(!error.is_empty());
+}
+
+#[test]
 fn run_test_with_args() {
     let args = vec!["ARG1".to_string(), "ARG2".to_string()];
     let options = ScriptOptions::new();
+
+    let script = if cfg!(windows) {
+        "echo arg1: %1\necho arg2: %2"
+    } else {
+        "echo arg1: $1\necho arg2: $2"
+    };
+
+    let (code, output, error) = run(script, &args, &options).unwrap();
+
+    assert_eq!(code, 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
+
+    assert!(output.find("arg1: ARG1").is_some());
+    assert!(output.find("arg2: ARG2").is_some());
+}
+
+#[test]
+fn run_test_with_runner_and_script_args() {
+    let args = vec!["ARG1".to_string(), "ARG2".to_string()];
+    let mut options = ScriptOptions::new();
+
+    if cfg!(windows) {
+        options.runner = Some("powershell".to_string());
+        options.runner_args = Some(vec![
+            "-window".to_string(),
+            "normal".to_string(),
+            "-command".to_string(),
+        ]);
+    } else {
+        options.runner_args = Some(vec!["--".to_string()]);
+    }
 
     let script = if cfg!(windows) {
         "echo arg1: %1\necho arg2: %2"

@@ -169,11 +169,20 @@ fn spawn_script(
                     }
                 };
 
-                let mut all_args = if cfg!(windows) {
+                let mut runner_args = Vec::<String>::new();
+
+                match options.runner_args {
+                    Some(ref value) => runner_args.extend(value.iter().cloned()),
+                    None => (),
+                };
+
+                let mut all_args = if command.eq("cmd.exe") || command.eq("cmd") {
                     let win_file = fix_path(&file);
-                    vec!["/C".to_string(), win_file]
+                    runner_args.extend(["/C".to_string(), win_file].iter().cloned());
+                    runner_args
                 } else {
-                    vec![file.to_string()]
+                    runner_args.extend([file.to_string()].iter().cloned());
+                    runner_args
                 };
 
                 all_args.extend(args.iter().cloned());

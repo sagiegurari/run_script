@@ -54,6 +54,8 @@ impl Error for ScriptError {
 pub struct ScriptOptions {
     /// Defines the requested runner (defaults to cmd in windows and sh for other platforms)
     pub runner: Option<String>,
+    /// Args for the runner (for cmd, /C will automatically be added at the end)
+    pub runner_args: Option<Vec<String>>,
     /// The working directory of the invocation
     pub working_directory: Option<PathBuf>,
     /// Default is IoOptions::Inherit
@@ -84,6 +86,7 @@ impl ScriptOptions {
     pub fn new() -> ScriptOptions {
         ScriptOptions {
             runner: None,
+            runner_args: None,
             working_directory: None,
             input_redirection: IoOptions::Inherit,
             output_redirection: IoOptions::Pipe,
