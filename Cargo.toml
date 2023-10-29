@@ -13,7 +13,6 @@ keywords = ["shell", "scripts", "os", "command", "runner"]
 categories = ["command-line-interface", "command-line-utilities"]
 include = [
   "/benches/*",
-  "/docs/*",
   "/examples/*",
   "/src/*",
   "/tests/*",
