@@ -27,8 +27,3 @@ fsio = { version = "^0.4", features = ["temp-path"] }
 
 [dev-dependencies]
 doc-comment = "^0.3"
-
-[badges.codecov]
-branch = "master"
-repository = "sagiegurari/run_script"
-service = "github"
