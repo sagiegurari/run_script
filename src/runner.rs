@@ -130,6 +130,11 @@ fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<Strin
                             script_lines.insert(insert_index, "set -x".to_string());
                             insert_index = insert_index + 1;
                         }
+                    } else {
+                        if !options.print_commands {
+                            script_lines.insert(insert_index, "@echo off".to_string());
+                            insert_index = insert_index + 1;
+                        }
                     }
 
                     script_lines.insert(insert_index, cd_command);

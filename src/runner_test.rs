@@ -16,6 +16,9 @@ fn modify_script_no_shebang_default_options() {
 
     let cwd = current_dir().unwrap();
     let mut expected_script = "".to_string();
+    if cfg!(windows) {
+        expected_script.push_str("@echo off\n");
+    }
     expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
     expected_script.push_str("\"\necho test\n\n");
@@ -25,6 +28,7 @@ fn modify_script_no_shebang_default_options() {
     assert_eq!(script, expected_script);
 }
 
+#[cfg(not(windows))]
 #[test]
 fn modify_script_with_shebang_default_options() {
     let options = ScriptOptions::new();
@@ -49,6 +53,8 @@ fn modify_script_exit_on_error() {
     let mut expected_script = "".to_string();
     if !cfg!(windows) {
         expected_script.push_str("set -e\n");
+    } else {
+        expected_script.push_str("@echo off\n");
     }
     expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
@@ -66,6 +72,9 @@ fn modify_script_working_directory() {
 
     let cwd = current_dir().unwrap();
     let mut expected_script = "".to_string();
+    if cfg!(windows) {
+        expected_script.push_str("@echo off\n");
+    }
     expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
     expected_script.push_str("\" && cd \"/usr/me/home\"\necho test\n\n");
