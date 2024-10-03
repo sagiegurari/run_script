@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.11.0 (2024-10-03)
+
+* Enhancement: support options.print_commands on Windows #26 (thanks @sadboy)
+
 ### v0.10.1 (2023-03-01)
 
 * Enhancement: support runner arguments #20 (thanks @aria-aghaei)

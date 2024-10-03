@@ -120,7 +120,12 @@ fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<Strin
                             0
                         };
 
-                    if !cfg!(windows) {
+                    if cfg!(windows) {
+                        if !options.print_commands {
+                            script_lines.insert(insert_index, "@echo off".to_string());
+                            insert_index = insert_index + 1;
+                        }
+                    } else {
                         if options.exit_on_error {
                             script_lines.insert(insert_index, "set -e".to_string());
                             insert_index = insert_index + 1;
@@ -128,11 +133,6 @@ fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<Strin
 
                         if options.print_commands {
                             script_lines.insert(insert_index, "set -x".to_string());
-                            insert_index = insert_index + 1;
-                        }
-                    } else {
-                        if !options.print_commands {
-                            script_lines.insert(insert_index, "@echo off".to_string());
                             insert_index = insert_index + 1;
                         }
                     }

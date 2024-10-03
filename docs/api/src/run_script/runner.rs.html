@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/runner.rs`."><title>runner.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-0000000007da4a04.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-0000000084b1ad12.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-0000000066e2bc86.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-0000000004ddb02d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-00000000ad926a49.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-00000000f27a569e.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-0000000091fda82d.css"><link rel="stylesheet" href="../../static.files/rustdoc-000000003c917dd8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-000000002350f6a9.css"><link rel="stylesheet" disabled href="../../static.files/dark-00000000691478b8.css"><link rel="stylesheet" disabled href="../../static.files/ayu-00000000ae54050d.css"><script src="../../static.files/storage-000000001db72db6.js"></script><script defer src="../../static.files/source-script-00000000478a5402.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-000000000682f2dc.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-00000000e18db8d9.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-000000008fbf5349.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-00000000d9d8501d.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-00000000a292be17.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../run_script/index.html"><img class="rust-logo" src="../../static.files/rust-logo-00000000a653c8a4.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-00000000304d111d.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/runner.rs`."><title>runner.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-0000000007da4a04.ttf.woff2,FiraSans-Regular-0000000084b1ad12.woff2,FiraSans-Medium-0000000066e2bc86.woff2,SourceCodePro-Regular-0000000004ddb02d.ttf.woff2,SourceCodePro-Semibold-00000000f27a569e.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-0000000091fda82d.css"><link rel="stylesheet" href="../../static.files/rustdoc-0000000094d0019d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="run_script" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0-nightly (ada5e2c7b 2024-05-31)" data-channel="nightly" data-search-js="search-00000000033a9c87.js" data-settings-js="settings-000000000a4e6193.js" ><script src="../../static.files/storage-0000000036c0a5b4.js"></script><script defer src="../../static.files/src-script-00000000e6115c00.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-00000000ff7d71c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-00000000626a34ad.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-00000000d9d8501d.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-00000000a292be17.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -291,13 +291,18 @@
 <a href="#291" id="291">291</a>
 <a href="#292" id="292">292</a>
 <a href="#293" id="293">293</a>
-</pre><pre class="rust"><code><span class="doccomment">//! # command
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! # command
 //!
 //! Runs task commands/scripts.
 //!
 
 </span><span class="attr">#[cfg(test)]
-#[path = <span class="string">&quot;./runner_test.rs&quot;</span>]
+#[path = <span class="string">"./runner_test.rs"</span>]
 </span><span class="kw">mod </span>runner_test;
 
 <span class="kw">use </span><span class="kw">crate</span>::types::{IoOptions, ScriptError, ScriptOptions, ScriptResult};
@@ -309,7 +314,7 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">fn </span>exit(code: i32) -&gt; ! {
-    <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, code);
+    <span class="macro">panic!</span>(<span class="string">"{}"</span>, code);
 }
 
 <span class="attr">#[cfg(not(test))]
@@ -359,7 +364,7 @@
 }
 
 <span class="kw">fn </span>create_script_file(script: <span class="kw-2">&amp;</span>String) -&gt; FsIOResult&lt;String&gt; {
-    <span class="kw">let </span>extension = <span class="kw">if </span><span class="macro">cfg!</span>(windows) { <span class="string">&quot;bat&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;sh&quot; </span>};
+    <span class="kw">let </span>extension = <span class="kw">if </span><span class="macro">cfg!</span>(windows) { <span class="string">"bat" </span>} <span class="kw">else </span>{ <span class="string">"sh" </span>};
     <span class="kw">let </span>file_path = fsio::path::get_temporary_file_path(extension);
 
     <span class="kw">match </span>fsio::file::write_text_file(<span class="kw-2">&amp;</span>file_path, script) {
@@ -388,53 +393,58 @@
                     <span class="kw">let </span>cwd_string = fix_path(cwd);
 
                     <span class="comment">// create cd command
-                    </span><span class="kw">let </span><span class="kw-2">mut </span>cd_command = <span class="string">&quot;cd \&quot;&quot;</span>.to_string();
+                    </span><span class="kw">let </span><span class="kw-2">mut </span>cd_command = <span class="string">"cd \""</span>.to_string();
                     cd_command.push_str(<span class="kw-2">&amp;</span>cwd_string);
-                    cd_command.push(<span class="string">&#39;&quot;&#39;</span>);
+                    cd_command.push(<span class="string">'"'</span>);
                     <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>working_directory) = options.working_directory {
-                        cd_command.push_str(<span class="string">&quot; &amp;&amp; cd \&quot;&quot;</span>);
+                        cd_command.push_str(<span class="string">" &amp;&amp; cd \""</span>);
                         <span class="kw">let </span>working_directory_string: String =
                             FromPath::from_path(<span class="kw-2">&amp;</span>working_directory);
                         cd_command.push_str(<span class="kw-2">&amp;</span>working_directory_string);
-                        cd_command.push(<span class="string">&#39;&quot;&#39;</span>);
+                        cd_command.push(<span class="string">'"'</span>);
                     }
 
                     <span class="kw">let </span><span class="kw-2">mut </span>script_lines: Vec&lt;String&gt; = script
                         .trim()
-                        .split(<span class="string">&quot;\n&quot;</span>)
+                        .split(<span class="string">"\n"</span>)
                         .map(|string| string.to_string())
                         .collect();
 
                     <span class="comment">// check if first line is shebang line
                     </span><span class="kw">let </span><span class="kw-2">mut </span>insert_index =
-                        <span class="kw">if </span>script_lines.len() &gt; <span class="number">0 </span>&amp;&amp; script_lines[<span class="number">0</span>].starts_with(<span class="string">&quot;#!&quot;</span>) {
+                        <span class="kw">if </span>script_lines.len() &gt; <span class="number">0 </span>&amp;&amp; script_lines[<span class="number">0</span>].starts_with(<span class="string">"#!"</span>) {
                             <span class="number">1
                         </span>} <span class="kw">else </span>{
                             <span class="number">0
                         </span>};
 
-                    <span class="kw">if </span>!<span class="macro">cfg!</span>(windows) {
+                    <span class="kw">if </span><span class="macro">cfg!</span>(windows) {
+                        <span class="kw">if </span>!options.print_commands {
+                            script_lines.insert(insert_index, <span class="string">"@echo off"</span>.to_string());
+                            insert_index = insert_index + <span class="number">1</span>;
+                        }
+                    } <span class="kw">else </span>{
                         <span class="kw">if </span>options.exit_on_error {
-                            script_lines.insert(insert_index, <span class="string">&quot;set -e&quot;</span>.to_string());
+                            script_lines.insert(insert_index, <span class="string">"set -e"</span>.to_string());
                             insert_index = insert_index + <span class="number">1</span>;
                         }
 
                         <span class="kw">if </span>options.print_commands {
-                            script_lines.insert(insert_index, <span class="string">&quot;set -x&quot;</span>.to_string());
+                            script_lines.insert(insert_index, <span class="string">"set -x"</span>.to_string());
                             insert_index = insert_index + <span class="number">1</span>;
                         }
                     }
 
                     script_lines.insert(insert_index, cd_command);
 
-                    script_lines.push(<span class="string">&quot;\n&quot;</span>.to_string());
+                    script_lines.push(<span class="string">"\n"</span>.to_string());
 
-                    <span class="kw">let </span>updated_script = script_lines.join(<span class="string">&quot;\n&quot;</span>);
+                    <span class="kw">let </span>updated_script = script_lines.join(<span class="string">"\n"</span>);
 
                     <span class="prelude-val">Ok</span>(updated_script)
                 }
                 <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(ScriptError::Description(
-                    <span class="string">&quot;Unable to extract current working directory path.&quot;</span>,
+                    <span class="string">"Unable to extract current working directory path."</span>,
                 )),
             }
         }
@@ -455,9 +465,9 @@
                     <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>value) =&gt; value,
                     <span class="prelude-val">None </span>=&gt; {
                         <span class="kw">if </span><span class="macro">cfg!</span>(windows) {
-                            <span class="string">&quot;cmd.exe&quot;
+                            <span class="string">"cmd.exe"
                         </span>} <span class="kw">else </span>{
-                            <span class="string">&quot;sh&quot;
+                            <span class="string">"sh"
                         </span>}
                     }
                 };
@@ -469,9 +479,9 @@
                     <span class="prelude-val">None </span>=&gt; (),
                 };
 
-                <span class="kw">let </span><span class="kw-2">mut </span>all_args = <span class="kw">if </span>command.eq(<span class="string">&quot;cmd.exe&quot;</span>) || command.eq(<span class="string">&quot;cmd&quot;</span>) {
+                <span class="kw">let </span><span class="kw-2">mut </span>all_args = <span class="kw">if </span>command.eq(<span class="string">"cmd.exe"</span>) || command.eq(<span class="string">"cmd"</span>) {
                     <span class="kw">let </span>win_file = fix_path(<span class="kw-2">&amp;</span>file);
-                    runner_args.extend([<span class="string">&quot;/C&quot;</span>.to_string(), win_file].iter().cloned());
+                    runner_args.extend([<span class="string">"/C"</span>.to_string(), win_file].iter().cloned());
                     runner_args
                 } <span class="kw">else </span>{
                     runner_args.extend([file.to_string()].iter().cloned());
@@ -572,17 +582,16 @@
     <span class="kw">match </span>result {
         <span class="prelude-val">Ok</span>((exit_code, output, error)) =&gt; {
             <span class="kw">if </span>exit_code != <span class="number">0 </span>{
-                <span class="macro">eprintln!</span>(<span class="string">&quot;{}&quot;</span>, error);
+                <span class="macro">eprintln!</span>(<span class="string">"{}"</span>, error);
                 exit(exit_code)
             } <span class="kw">else </span>{
                 (output, error)
             }
         }
         <span class="prelude-val">Err</span>(error) =&gt; {
-            <span class="macro">eprintln!</span>(<span class="string">&quot;{}&quot;</span>, error);
+            <span class="macro">eprintln!</span>(<span class="string">"{}"</span>, error);
             exit(<span class="number">1</span>)
         }
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="run_script" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (065852def 2023-02-13)" data-search-js="search-00000000a9ae988e.js" data-settings-js="settings-00000000951b6b67.js" data-settings-css="settings-000000009bfc1ad1.css" ></div></body></html>
+</code></pre></div></section></main></body></html>
