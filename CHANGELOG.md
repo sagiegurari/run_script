@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v0.11.1 (2025-10-14)
+### v0.11.2 (2025-10-14)
 
 * Enhancement: add encoding conversion #27 (thanks @TerakomariGandesblood)
 
