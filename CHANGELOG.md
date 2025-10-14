@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.11.1 (2025-10-14)
+
+* Enhancement: add encoding conversion #27 (thanks @TerakomariGandesblood)
+
 ### v0.11.0 (2024-10-03)
 
 * Enhancement: support options.print_commands on Windows #26 (thanks @sadboy)
