@@ -7,6 +7,8 @@
 #[path = "./types_test.rs"]
 mod types_test;
 
+#[cfg(feature = "encoding_rs")]
+use encoding_rs::Encoding;
 use fsio::error::FsIOError;
 use std::error::Error;
 use std::fmt;
@@ -68,6 +70,9 @@ pub struct ScriptOptions {
     pub print_commands: bool,
     /// Environment environment variables to add before invocation
     pub env_vars: Option<std::collections::HashMap<String, String>>,
+    /// Encoding conversion for stdout and stderr
+    #[cfg(feature = "encoding_rs")]
+    pub encoding: Option<&'static Encoding>,
 }
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -93,6 +98,8 @@ impl ScriptOptions {
             exit_on_error: false,
             print_commands: false,
             env_vars: None,
+            #[cfg(feature = "encoding_rs")]
+            encoding: None,
         }
     }
 }

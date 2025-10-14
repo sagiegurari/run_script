@@ -254,8 +254,25 @@ pub(crate) fn run(
             match process_result {
                 Ok(output) => {
                     let exit_code = get_exit_code(output.status);
-                    let stdout = String::from_utf8_lossy(&output.stdout).into_owned();
-                    let stderr = String::from_utf8_lossy(&output.stderr).into_owned();
+
+                    #[cfg(feature = "encoding_rs")]
+                    let (stdout, stderr) = if let Some(encoding) = options.encoding {
+                        (
+                            encoding.decode(&output.stdout).0.into_owned(),
+                            encoding.decode(&output.stderr).0.into_owned(),
+                        )
+                    } else {
+                        (
+                            String::from_utf8_lossy(&output.stdout).into_owned(),
+                            String::from_utf8_lossy(&output.stderr).into_owned(),
+                        )
+                    };
+
+                    #[cfg(not(feature = "encoding_rs"))]
+                    let (stdout, stderr) = (
+                        String::from_utf8_lossy(&output.stdout).into_owned(),
+                        String::from_utf8_lossy(&output.stderr).into_owned(),
+                    );
 
                     Ok((exit_code, stdout, stderr))
                 }

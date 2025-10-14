@@ -144,6 +144,28 @@ fn run_test_no_args_default_options() {
     assert!(error.is_empty());
 }
 
+#[cfg(feature = "encoding_rs")]
+#[test]
+fn run_test_no_args_with_encoding() {
+    let args = vec![];
+    let mut options = ScriptOptions::new();
+    options.encoding = Some(encoding_rs::UTF_8);
+
+    let (code, output, error) = run(
+        r#"
+        echo "Test"
+        exit 0
+        "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    assert_eq!(code, 0);
+    assert!(!output.is_empty());
+    assert!(error.is_empty());
+}
+
 #[test]
 fn run_test_error_exit_code() {
     let args = vec![];

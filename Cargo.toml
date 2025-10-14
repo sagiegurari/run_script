@@ -24,6 +24,9 @@ include = [
 
 [dependencies]
 fsio = { version = "^0.4", features = ["temp-path"] }
+encoding_rs = { version = "0.8.35", default-features = false, features = [
+  "alloc",
+], optional = true }
 
 [dev-dependencies]
 doc-comment = "^0.3"

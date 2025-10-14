@@ -24,4 +24,6 @@ fn script_options_new() {
     assert_eq!(options.output_redirection, IoOptions::Pipe);
     assert!(!options.exit_on_error);
     assert!(!options.print_commands);
+    #[cfg(feature = "encoding_rs")]
+    assert!(options.encoding.is_none());
 }
