@@ -18,13 +18,15 @@ fn modify_script_no_shebang_default_options() {
     let mut expected_script = "".to_string();
     if cfg!(windows) {
         expected_script.push_str("@echo off\n");
+        expected_script.push_str("cd /d \"");
+    } else {
+        expected_script.push_str("cd \"");
     }
-    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
     expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
-
+    let script = script.replace("\r\n", "\n");
     assert_eq!(script, expected_script);
 }
 
@@ -40,7 +42,6 @@ fn modify_script_with_shebang_default_options() {
     expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"#!/bin/bash\necho test".to_string(), &options).unwrap();
-
     assert_eq!(script, expected_script);
 }
 
@@ -53,15 +54,16 @@ fn modify_script_exit_on_error() {
     let mut expected_script = "".to_string();
     if !cfg!(windows) {
         expected_script.push_str("set -e\n");
+        expected_script.push_str("cd \"");
     } else {
         expected_script.push_str("@echo off\n");
+        expected_script.push_str("cd /d \"");
     }
-    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
     expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
-
+    let script = script.replace("\r\n", "\n");
     assert_eq!(script, expected_script);
 }
 
@@ -74,13 +76,16 @@ fn modify_script_working_directory() {
     let mut expected_script = "".to_string();
     if cfg!(windows) {
         expected_script.push_str("@echo off\n");
+        expected_script.push_str("cd /d \"");
+        expected_script.push_str(cwd.to_str().unwrap());
+        expected_script.push_str("\" && cd /d \"/usr/me/home\"\necho test\n\n");
+    } else {
+        expected_script.push_str("cd \"");
+        expected_script.push_str(cwd.to_str().unwrap());
+        expected_script.push_str("\" && cd \"/usr/me/home\"\necho test\n\n");
     }
-    expected_script.push_str("cd \"");
-    expected_script.push_str(cwd.to_str().unwrap());
-    expected_script.push_str("\" && cd \"/usr/me/home\"\necho test\n\n");
-
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
-
+    let script = script.replace("\r\n", "\n");
     assert_eq!(script, expected_script);
 }
 
@@ -93,13 +98,15 @@ fn modify_script_print_commands() {
     let mut expected_script = "".to_string();
     if !cfg!(windows) {
         expected_script.push_str("set -x\n");
+        expected_script.push_str("cd \"");
+    } else {
+        expected_script.push_str("cd /d \"");
     }
-    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
     expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
-
+    let script = script.replace("\r\n", "\n");
     assert_eq!(script, expected_script);
 }
 
@@ -114,13 +121,15 @@ fn modify_script_exit_on_error_and_print_commands() {
     if !cfg!(windows) {
         expected_script.push_str("set -e\n");
         expected_script.push_str("set -x\n");
+        expected_script.push_str("cd \"");
+    } else {
+        expected_script.push_str("cd /d \"");
     }
-    expected_script.push_str("cd \"");
     expected_script.push_str(cwd.to_str().unwrap());
     expected_script.push_str("\"\necho test\n\n");
 
     let script = modify_script(&"echo test".to_string(), &options).unwrap();
-
+    let script = script.replace("\r\n", "\n");
     assert_eq!(script, expected_script);
 }
 
@@ -153,7 +162,8 @@ fn run_test_no_args_with_encoding() {
 
     let (code, output, error) = run(
         r#"
-        echo "Test"
+        chcp 65001
+        echo "中文测试"
         exit 0
         "#,
         &args,
