@@ -95,11 +95,20 @@ fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<Strin
                     let cwd_string = fix_path(cwd);
 
                     // create cd command
-                    let mut cd_command = "cd \"".to_string();
+                    // let mut cd_command = "cd \"".to_string();
+                    let mut cd_command = if cfg!(windows) {
+                        "cd /d \"".to_string()
+                    } else {
+                        "cd \"".to_string()
+                    };
                     cd_command.push_str(&cwd_string);
                     cd_command.push('"');
                     if let Some(ref working_directory) = options.working_directory {
-                        cd_command.push_str(" && cd \"");
+                        if cfg!(windows) {
+                            cd_command.push_str(" && cd /d \"");
+                        } else {
+                            cd_command.push_str(" && cd \"");
+                        }
                         let working_directory_string: String =
                             FromPath::from_path(&working_directory);
                         cd_command.push_str(&working_directory_string);
@@ -142,7 +151,8 @@ fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<Strin
                     script_lines.push("\n".to_string());
 
                     let updated_script = script_lines.join("\n");
-
+                    #[cfg(windows)]
+                    let updated_script = replace_to_crlf(updated_script);
                     Ok(updated_script)
                 }
                 None => Err(ScriptError::Description(
@@ -152,6 +162,32 @@ fn modify_script(script: &String, options: &ScriptOptions) -> ScriptResult<Strin
         }
         Err(error) => Err(ScriptError::IOError(error)),
     }
+}
+
+#[cfg(windows)]
+fn replace_to_crlf(str: String) -> String {
+    let mut result = String::with_capacity(str.len());
+    let mut chars = str.chars().peekable();
+
+    while let Some(ch) = chars.next() {
+        match ch {
+            '\r' => {
+                if chars.peek() == Some(&'\n') {
+                    result.push_str("\r\n");
+                    chars.next();
+                } else {
+                    result.push_str("\r");
+                }
+            }
+            '\n' => {
+                result.push_str("\r\n");
+            }
+            _ => {
+                result.push(ch);
+            }
+        }
+    }
+    result
 }
 
 /// Invokes the provided script content and returns a process handle.
